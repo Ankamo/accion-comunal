@@ -7,7 +7,7 @@ const Header = () => {
             <div className="logo-left">
                 <a href="/">
                     <Image
-                        src="/logoOac.png"
+                        src="/LogoOac.png"
                         alt="Logo Izquierdo"
                         width={70}
                         height={90}

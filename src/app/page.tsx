@@ -1,231 +1,346 @@
-// src/app/page.tsx
-"use client";
+'use client';
 
-import React, { useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 
-const Page = () => {
-    const [departamento, setDepartamento] = useState('');
-    const [municipio, setMunicipio] = useState('');
-    const [tipoOAC, setTipoOAC] = useState('');
-    const [nombreOAC, setNombreOAC] = useState('');
-    const [nitOAC, setNitOAC] = useState('');
-    const [rucOAC, setRucOAC] = useState('');
-    const [direccionOAC, setDireccionOAC] = useState('');
-    const [barrioOAC, setBarrioOAC] = useState('');
-    const [telefonoOAC, setTelefonoOAC] = useState('');
-    const [correoOAC, setCorreoOAC] = useState('');
-    const [showRegistroForm, setShowRegistroForm] = useState(false);
+interface FormData {
+    department: string;
+    municipality: string;
+    tipoOac: string;
+    tipoUbicacion: string;
+    nombreBarrio: string; // Campo para el nombre del barrio o vereda
+}
 
-    const handleRegistroSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+interface Departamento {
+    id: string;
+    nombre: string;
+}
 
-        const newOAC = {
-            departamento,
-            municipio,
-            tipoOAC,
-            nombreOAC,
-            nitOAC,
-            rucOAC,
-            direccionOAC,
-            barrioOAC,
-            telefonoOAC,
-            correoOAC,
+interface Municipio {
+    id: string;
+    nombre: string;
+}
+
+interface Tipo {
+    nombre: string;
+}
+
+export default function Home() {
+    const [formData, setFormData] = useState<FormData>({
+        department: '',
+        municipality: '',
+        tipoOac: '',
+        tipoUbicacion: '',
+        nombreBarrio: '', // Inicialización del campo para el nombre del barrio
+    });
+
+    const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+    const [municipios, setMunicipios] = useState<Municipio[]>([]);
+    const [tiposOac, setTiposOac] = useState<Tipo[]>([]);
+    const [tiposUbicacion, setTiposUbicacion] = useState<Tipo[]>([]);
+
+    const apiKey = 'AIzaSyDdbmm259ZMNXfmqwCptHtPwPcluVbb-WA'; // Reemplaza con tu API Key
+    const sheetId = '1w_8hXKQVKbNMZz7jjx0K1VkqibzK3wm5M_pCIACEffo'; // Reemplaza con el ID de tu hoja de Google Sheets
+
+    // Obtener los departamentos
+    useEffect(() => {
+        const fetchDepartamentos = async () => {
+            const sheetName = 'Departamentos';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A:B?key=${apiKey}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const fetchedDepartamentos = data.values.slice(1).map((row: string[]) => ({
+                        id: row[0],
+                        nombre: row[1],
+                    }));
+                    setDepartamentos(fetchedDepartamentos);
+                } else {
+                    throw new Error('Error al obtener los departamentos');
+                }
+            } catch (error) {
+                console.error('Error al obtener los datos de Google Sheets:', error);
+            }
         };
 
-        console.log("Registro de OAC:", newOAC); // Para propósitos de prueba
+        fetchDepartamentos();
+    }, [apiKey, sheetId]);
 
-        // Resetear el formulario
-        setDepartamento('');
-        setMunicipio('');
-        setTipoOAC('');
-        setNombreOAC('');
-        setNitOAC('');
-        setRucOAC('');
-        setDireccionOAC('');
-        setBarrioOAC('');
-        setTelefonoOAC('');
-        setCorreoOAC('');
-        setShowRegistroForm(false);
+    // Obtener los municipios basados en el departamento seleccionado
+    useEffect(() => {
+        const fetchMunicipios = async () => {
+            if (!formData.department) return; // Evitar la llamada si no hay departamento seleccionado
+
+            const sheetName = 'Municipios';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A:D?key=${apiKey}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const fetchedMunicipios = data.values.slice(1)
+                        .filter((row: string[]) => row[0] === formData.department)
+                        .map((row: string[]) => ({
+                            id: row[2],
+                            nombre: row[3],
+                        }));
+                    setMunicipios(fetchedMunicipios);
+                } else {
+                    throw new Error('Error al obtener los municipios');
+                }
+            } catch (error) {
+                console.error('Error al obtener los datos de Google Sheets:', error);
+            }
+        };
+
+        fetchMunicipios();
+    }, [formData.department, apiKey, sheetId]);
+
+    // Obtener los tipos de OAC
+    useEffect(() => {
+        const fetchTiposOac = async () => {
+            const sheetName = 'TipoOac';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A:A?key=${apiKey}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const fetchedTiposOac = data.values.slice(1).map((row: string[]) => ({
+                        nombre: row[0],
+                    }));
+                    setTiposOac(fetchedTiposOac);
+                } else {
+                    throw new Error('Error al obtener los tipos de OAC');
+                }
+            } catch (error) {
+                console.error('Error al obtener los datos de Google Sheets:', error);
+            }
+        };
+
+        fetchTiposOac();
+    }, [apiKey, sheetId]);
+
+    // Obtener los tipos de ubicación
+    useEffect(() => {
+        const fetchTiposUbicacion = async () => {
+            const sheetName = 'TipoUbicacion';
+
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A:A?key=${apiKey}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const fetchedTiposUbicacion = data.values.slice(1).map((row: string[]) => ({
+                        nombre: row[0],
+                    }));
+                    setTiposUbicacion(fetchedTiposUbicacion);
+                } else {
+                    throw new Error('Error al obtener los tipos de ubicación');
+                }
+            } catch (error) {
+                console.error('Error al obtener los datos de Google Sheets:', error);
+            }
+        };
+
+        fetchTiposUbicacion();
+    }, [apiKey, sheetId]);
+
+    const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // Validar que se seleccionaron los datos necesarios
+        if (!formData.department || !formData.municipality || !formData.tipoOac || !formData.tipoUbicacion) {
+            alert('Por favor completa todos los campos.');
+            return;
+        }
+
+        try {
+            // Preparar los datos para enviar a Google Sheets
+            const body = {
+                values: [
+                    [
+                        formData.department,
+                        formData.municipality,
+                        formData.tipoOac,
+                        formData.tipoUbicacion,
+                        formData.nombreBarrio || '',
+                        '', // URL, puedes agregarla si es necesario
+                    ],
+                ],
+            };
+
+            // Hacer la petición POST a la API de Google Sheets
+            const response = await fetch(
+                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/OacRegistrados!A:H:append?valueInputOption=USER_ENTERED&key=${apiKey}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body),
+                }
+            );
+
+            if (response.ok) {
+                alert('Datos enviados correctamente a la hoja OacRegistrados.');
+
+                // Generar la URL
+                const url = `/${formData.department.toLowerCase()}/${formData.municipality.toLowerCase()}/${formData.tipoOac.toLowerCase().replace(/\s+/g, '')}`;
+                alert(`La URL generada es: ${url}`);
+
+                // Limpiar el formulario
+                setFormData({
+                    department: '',
+                    municipality: '',
+                    tipoOac: '',
+                    tipoUbicacion: '',
+                    nombreBarrio: '',
+                });
+            } else {
+                const errorData = await response.json();
+                console.error('Error al enviar los datos a Google Sheets:', errorData);
+                throw new Error('Error al enviar los datos a Google Sheets.');
+            }
+        } catch (error) {
+            console.error('Error al enviar los datos:', error);
+            alert('Hubo un error al enviar los datos.');
+        }
     };
 
     return (
-        <div className="p-6 bg-gray-800 rounded-md shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-center text-white">Registro de Organización de Acción Comunal (OAC)</h2>
+        <main className="min-h-screen bg-gray-800 flex items-center justify-center">
+            <div className="bg-gray-900 shadow-lg rounded-lg p-8 max-w-md w-full">
+                <h1 className="text-3xl font-bold text-white text-center mb-6">
+                    Formulario de Selección
+                </h1>
 
-            <button
-                onClick={() => setShowRegistroForm(!showRegistroForm)}
-                className="mb-4 w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200"
-            >
-                {showRegistroForm ? 'Ocultar Formulario' : 'Mostrar Formulario'}
-            </button>
-
-            {showRegistroForm && (
-                <form onSubmit={handleRegistroSubmit} className="bg-gray-700 p-4 rounded-md">
-                    <h3 className="text-xl font-bold mb-4 text-white">Completa los Datos de la OAC</h3>
-
-                    <div className="mb-4">
-                        <label htmlFor="departamento" className="block text-sm font-medium text-gray-300 mb-2">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Campo Departamento */}
+                    <div>
+                        <label htmlFor="department" className="block text-gray-300">
                             Departamento:
                         </label>
                         <select
-                            id="departamento"
-                            value={departamento}
-                            onChange={(e) => setDepartamento(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
+                            id="department"
+                            name="department"
+                            value={formData.department}
+                            onChange={handleChange}
+                            className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
                         >
-                            <option value="" disabled>Selecciona un departamento</option>
-                            <option value="Antioquia">Antioquia</option>
-                            <option value="Cundinamarca">Cundinamarca</option>
-                            <option value="Valle del Cauca">Valle del Cauca</option>
-                            <option value="Bogotá">Bogotá</option>
-                            <option value="Otros">Otros</option>
+                            <option value="">Selecciona un departamento</option>
+                            {departamentos.map((d) => (
+                                <option key={d.id} value={d.id}>
+                                    {d.nombre}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="municipio" className="block text-sm font-medium text-gray-300 mb-2">
+                    {/* Campo Municipio */}
+                    <div>
+                        <label htmlFor="municipality" className="block text-gray-300">
                             Municipio:
                         </label>
-                        <input
-                            id="municipio"
-                            type="text"
-                            value={municipio}
-                            onChange={(e) => setMunicipio(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
+                        <select
+                            id="municipality"
+                            name="municipality"
+                            value={formData.municipality}
+                            onChange={handleChange}
+                            className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
+                        >
+                            <option value="">Selecciona un municipio</option>
+                            {municipios.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                    {m.nombre}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="tipoOAC" className="block text-sm font-medium text-gray-300 mb-2">
+                    {/* Campo Tipo de OAC */}
+                    <div>
+                        <label htmlFor="tipoOac" className="block text-gray-300">
                             Tipo de OAC:
                         </label>
                         <select
-                            id="tipoOAC"
-                            value={tipoOAC}
-                            onChange={(e) => setTipoOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
+                            id="tipoOac"
+                            name="tipoOac"
+                            value={formData.tipoOac}
+                            onChange={handleChange}
+                            className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
                         >
-                            <option value="" disabled>Selecciona un tipo de OAC</option>
-                            <option value="Junta de Acción Comunal">Junta de Acción Comunal</option>
-                            <option value="Junta de Vivienda Comunal">Junta de Vivienda Comunal</option>
-                            <option value="Asociación de Juntas de Acción Comunal">Asociación de Juntas de Acción Comunal</option>
-                            <option value="Juntas de Vivienda Comunal">Juntas de Vivienda Comunal</option>
-                            <option value="Federación Departamental de Acción Comunal">Federación Departamental de Acción Comunal</option>
-                            <option value="Confederación Nacional de Acción Comunal">Confederación Nacional de Acción Comunal</option>
+                            <option value="">Selecciona un tipo de OAC</option>
+                            {tiposOac.map((t, index) => (
+                                <option key={index} value={t.nombre}>
+                                    {t.nombre}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="nombreOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            Nombre de la OAC:
+                    {/* Campo Tipo de Ubicación */}
+                    <div>
+                        <label htmlFor="tipoUbicacion" className="block text-gray-300">
+                            Tipo de Ubicación:
                         </label>
-                        <input
-                            id="nombreOAC"
-                            type="text"
-                            value={nombreOAC}
-                            onChange={(e) => setNombreOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
+                        <select
+                            id="tipoUbicacion"
+                            name="tipoUbicacion"
+                            value={formData.tipoUbicacion}
+                            onChange={handleChange}
+                            className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
+                        >
+                            <option value="">Selecciona un tipo de ubicación</option>
+                            {tiposUbicacion.map((t, index) => (
+                                <option key={index} value={t.nombre}>
+                                    {t.nombre}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="nitOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            NIT de la OAC:
+                    {/* Campo Nombre del Barrio */}
+                    <div>
+                        <label htmlFor="nombreBarrio" className="block text-gray-300">
+                            Nombre del Barrio:
                         </label>
                         <input
-                            id="nitOAC"
                             type="text"
-                            value={nitOAC}
-                            onChange={(e) => setNitOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="rucOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            RUC de la OAC:
-                        </label>
-                        <input
-                            id="rucOAC"
-                            type="text"
-                            value={rucOAC}
-                            onChange={(e) => setRucOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="direccionOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            Dirección de la OAC:
-                        </label>
-                        <input
-                            id="direccionOAC"
-                            type="text"
-                            value={direccionOAC}
-                            onChange={(e) => setDireccionOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="barrioOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            Barrio:
-                        </label>
-                        <input
-                            id="barrioOAC"
-                            type="text"
-                            value={barrioOAC}
-                            onChange={(e) => setBarrioOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="telefonoOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            Teléfono de Contacto:
-                        </label>
-                        <input
-                            id="telefonoOAC"
-                            type="text"
-                            value={telefonoOAC}
-                            onChange={(e) => setTelefonoOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="correoOAC" className="block text-sm font-medium text-gray-300 mb-2">
-                            Correo Electrónico de Contacto:
-                        </label>
-                        <input
-                            id="correoOAC"
-                            type="email"
-                            value={correoOAC}
-                            onChange={(e) => setCorreoOAC(e.target.value)}
-                            className="block w-full border border-gray-600 bg-gray-600 text-white rounded-md p-3 focus:outline-none"
-                            required
+                            id="nombreBarrio"
+                            name="nombreBarrio"
+                            value={formData.nombreBarrio}
+                            onChange={handleChange}
+                            className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
+                            placeholder="Ingresa el nombre del barrio o vereda"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full bg-green-600 text-white p-3 rounded-md hover:bg-green-700 transition duration-200"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg"
                     >
-                        Registrar OAC
+                        Enviar
                     </button>
                 </form>
-            )}
-        </div>
+            </div>
+        </main>
     );
-};
-
-export default Page;
+}

@@ -1,50 +1,49 @@
-// components/Formulario.tsx
-"use client"; // Agrega esta línea para marcar el componente como un Componente del Cliente
+// src/app/page.tsx
+"use client";
 
 import React, { useState } from 'react';
 
-const Formulario = () => {
+const Page = () => {
     const [departamento, setDepartamento] = useState('');
-    const [organizacion, setOrganizacion] = useState('');
+    const [municipio, setMunicipio] = useState('');
+    const [oacEncontradas, setOacEncontradas] = useState<string[]>([]);
 
-    // Lista de departamentos para el ejemplo
-    const departamentos = [
-        { id: 1, nombre: 'Antioquia' },
-        { id: 2, nombre: 'Cundinamarca' },
-        { id: 3, nombre: 'Valle del Cauca' },
-        { id: 4, nombre: 'Bogotá' },
-        // Agrega más departamentos según sea necesario
-    ];
+    const data = {
+        Antioquia: ['Medellín', 'Envigado', 'Itagüí'],
+        Cundinamarca: ['Bogotá', 'Girardot', 'Soacha'],
+        'Valle del Cauca': ['Cali', 'Palmira', 'Buenaventura'],
+        Bogotá: ['Bogotá D.C.']
+    };
 
-    // Lista de organizaciones de acción comunal para el ejemplo
-    const organizaciones = [
-        { id: 1, nombre: 'Organización 1' },
-        { id: 2, nombre: 'Organización 2' },
-        { id: 3, nombre: 'Organización 3' },
-        { id: 4, nombre: 'Organización 4' },
-        // Agrega más organizaciones según sea necesario
-    ];
+    const organizaciones = {
+        Girardot: ['OAC Girardot 1', 'OAC Girardot 2'],
+        Medellín: ['OAC Medellín 1', 'OAC Medellín 2'],
+        Cali: ['OAC Cali 1', 'OAC Cali 2'],
+    };
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        if (name === 'departamento') {
-            setDepartamento(value);
-        } else if (name === 'organizacion') {
-            setOrganizacion(value);
-        }
+    const handleDepartamentoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setDepartamento(e.target.value);
+        setMunicipio('');
+    };
+
+    const handleMunicipioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setMunicipio(e.target.value);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica de envío del formulario
-        console.log('Departamento seleccionado:', departamento);
-        console.log('Organización seleccionada:', organizacion);
+        if (municipio) {
+            const oacMunicipio = organizaciones[municipio as keyof typeof organizaciones] || [];
+            setOacEncontradas(oacMunicipio);
+        } else {
+            setOacEncontradas([]);
+        }
     };
 
     return (
         <form onSubmit={handleSubmit} className="p-6 bg-gray-800 rounded-md shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-center text-white">Buscar Organización de Acción Comunal</h2>
-            
+            <h2 className="text-2xl font-bold mb-6 text-center text-white">Buscar OAC por Municipio</h2>
+
             <div className="mb-6">
                 <label htmlFor="departamento" className="block text-sm font-medium text-gray-300 mb-2">
                     Departamento:
@@ -53,39 +52,33 @@ const Formulario = () => {
                     id="departamento"
                     name="departamento"
                     value={departamento}
-                    onChange={handleChange}
+                    onChange={handleDepartamentoChange}
                     className="block w-full border border-gray-600 bg-gray-700 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 >
-                    <option value="" disabled>
-                        Selecciona un departamento
-                    </option>
-                    {departamentos.map(dept => (
-                        <option key={dept.id} value={dept.nombre}>
-                            {dept.nombre}
-                        </option>
+                    <option value="" disabled>Selecciona un departamento</option>
+                    {Object.keys(data).map(dept => (
+                        <option key={dept} value={dept}>{dept}</option>
                     ))}
                 </select>
             </div>
 
             <div className="mb-6">
-                <label htmlFor="organizacion" className="block text-sm font-medium text-gray-300 mb-2">
-                    Organización:
+                <label htmlFor="municipio" className="block text-sm font-medium text-gray-300 mb-2">
+                    Municipio:
                 </label>
                 <select
-                    id="organizacion"
-                    name="organizacion"
-                    value={organizacion}
-                    onChange={handleChange}
+                    id="municipio"
+                    name="municipio"
+                    value={municipio}
+                    onChange={handleMunicipioChange}
+                    disabled={!departamento}
                     className="block w-full border border-gray-600 bg-gray-700 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 >
-                    <option value="" disabled>
-                        Selecciona una organización
-                    </option>
-                    {organizaciones.map(org => (
-                        <option key={org.id} value={org.nombre}>
-                            {org.nombre}
-                        </option>
+                    <option value="" disabled>Selecciona un municipio</option>
+                    {departamento && data[departamento as keyof typeof data]?.map(mun => (
+                        <option key={mun} value={mun}>{mun}</option>
                     ))}
+
                 </select>
             </div>
 
@@ -95,8 +88,19 @@ const Formulario = () => {
             >
                 Buscar
             </button>
+
+            {oacEncontradas.length > 0 && (
+                <div className="mt-6 bg-gray-700 text-white p-4 rounded-md">
+                    <h3 className="text-xl font-bold mb-4">OAC Registradas en {municipio}:</h3>
+                    <ul>
+                        {oacEncontradas.map((oac, index) => (
+                            <li key={index} className="mb-2">{oac}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </form>
     );
 };
 
-export default Formulario;
+export default Page;

@@ -1,6 +1,5 @@
 import '../styles/globals.css';
 import Header from '../components/Header';
-import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { ReactNode } from 'react';
 
@@ -14,7 +13,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="es">
       <body className="bg-[#0a0403] text-white">
         <Header />
-        <Nav />
         <main className="min-h-screen p-4">{children}</main>
         <Footer />
       </body>

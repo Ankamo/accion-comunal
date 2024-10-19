@@ -9,6 +9,7 @@ const Footer = () => {
                 <p id="footer-barrio">Barrio NombreBarrio</p>
                 <p id="footer-correo">contacto@juntaaccioncomunal.com</p>
                 <p id="footer-telefono">+57 300 123 4567</p>
+                <p id="footer-periodo">Periodo 2024-2026</p>
             </div>
 
             <div className="footer-logos">
@@ -60,8 +61,9 @@ const Footer = () => {
 
             <div className="footer-creator">
                 <p id="footer-creador">Sitio creado por:</p>
-                <p>NextGen Coders</p>
-                <p id="footer-periodo">Periodo 2024-2026</p>
+                <p>Ankamo</p>
+                <p>&copy; 2024 J.A.C. del Barrio de Rosa Blanca.</p>
+                <p>Todos los derechos reservados.</p>
             </div>
         </footer>
     );

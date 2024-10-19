@@ -48,7 +48,7 @@ const Footer = () => {
                 <ul className="footer-logo">
                     <li><a href="https://www.idaco.gov.co/">
                         <Image
-                            src="/LogoIvc.png"
+                            src="/logoIvc.png"
                             alt="Logo IVC"
                             width={60}
                             height={80}

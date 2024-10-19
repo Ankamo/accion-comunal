@@ -1,192 +1,102 @@
-"use client";
+// components/Formulario.tsx
+"use client"; // Agrega esta línea para marcar el componente como un Componente del Cliente
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
-// Lista de departamentos y municipios simulados
-const departamentos = {
-    Cundinamarca: ['Girardot', 'Bogotá', 'Soacha'],
-    Antioquia: ['Medellín', 'Envigado', 'Bello'],
-    // Agrega más departamentos y municipios aquí
-};
+const Formulario = () => {
+    const [departamento, setDepartamento] = useState('');
+    const [organizacion, setOrganizacion] = useState('');
 
-// Lista de organizaciones simuladas por municipio
-const organizacionesSimuladas = {
-    Girardot: [
-        { nombre: 'Junta de Acción Comunal del Barrio de Rosa Blanca', id: 1 },
-    ],
-    Bogotá: [],
-    Soacha: [],
-    Medellín: [],
-    Envigado: [],
-    Bello: [],
-    // Agrega más organizaciones por municipio
-};
+    // Lista de departamentos para el ejemplo
+    const departamentos = [
+        { id: 1, nombre: 'Antioquia' },
+        { id: 2, nombre: 'Cundinamarca' },
+        { id: 3, nombre: 'Valle del Cauca' },
+        { id: 4, nombre: 'Bogotá' },
+        // Agrega más departamentos según sea necesario
+    ];
 
-const FormularioOAC = () => {
-    const router = useRouter();
-    const [formData, setFormData] = useState({
-        department: '',
-        municipality: '',
-    });
-
-    const [organizaciones, setOrganizaciones] = useState([]);
-    const [nuevaOAC, setNuevaOAC] = useState({ tipo: '', nombre: '', nit: '' });
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
+    // Lista de organizaciones de acción comunal para el ejemplo
+    const organizaciones = [
+        { id: 1, nombre: 'Organización 1' },
+        { id: 2, nombre: 'Organización 2' },
+        { id: 3, nombre: 'Organización 3' },
+        { id: 4, nombre: 'Organización 4' },
+        // Agrega más organizaciones según sea necesario
+    ];
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-
-        if (e.target.name === 'municipality') {
-            const resultado = organizacionesSimuladas[e.target.value] || [];
-            setOrganizaciones(resultado);
-
-            if (resultado.length === 0) {
-                setMostrarFormulario(true); // Mostrar formulario si no hay organizaciones
-            } else {
-                setMostrarFormulario(false); // Ocultar formulario si hay organizaciones
-            }
+        const { name, value } = e.target;
+        if (name === 'departamento') {
+            setDepartamento(value);
+        } else if (name === 'organizacion') {
+            setOrganizacion(value);
         }
     };
 
-    const handleNuevaOACChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNuevaOAC({
-            ...nuevaOAC,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleNuevaOACSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        // Aquí puedes agregar la lógica para enviar los datos a Google Sheets o una API
-        console.log("Nueva OAC registrada:", nuevaOAC);
-        setNuevaOAC({ tipo: '', nombre: '', nit: '' }); // Limpiar el formulario
-        alert('Nueva OAC registrada correctamente.');
-    };
-
-    const handleIngresar = (oacId: number) => {
-        // Redirigir a la página de la OAC
-        router.push(`/oac/${oacId}`);
+        // Aquí puedes manejar la lógica de envío del formulario
+        console.log('Departamento seleccionado:', departamento);
+        console.log('Organización seleccionada:', organizacion);
     };
 
     return (
-        <div className="max-w-md mx-auto p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-10">
-            <h1 className="text-2xl mb-6 text-center">Organizaciones de Acción Comunal</h1>
-
-            {/* Seleccionar Departamento */}
-            <div className="mb-4">
-                <label htmlFor="department" className="block text-sm mb-2">Departamento:</label>
+        <form onSubmit={handleSubmit} className="p-6 bg-gray-800 rounded-md shadow-lg">
+            <h2 className="text-2xl font-bold mb-6 text-center text-white">Buscar Organización de Acción Comunal</h2>
+            
+            <div className="mb-6">
+                <label htmlFor="departamento" className="block text-sm font-medium text-gray-300 mb-2">
+                    Departamento:
+                </label>
                 <select
-                    id="department"
-                    name="department"
-                    value={formData.department}
+                    id="departamento"
+                    name="departamento"
+                    value={departamento}
                     onChange={handleChange}
-                    className="w-full p-2 bg-gray-700 rounded"
+                    className="block w-full border border-gray-600 bg-gray-700 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                 >
-                    <option value="">Selecciona un departamento</option>
-                    {Object.keys(departamentos).map((department) => (
-                        <option key={department} value={department}>
-                            {department}
+                    <option value="" disabled>
+                        Selecciona un departamento
+                    </option>
+                    {departamentos.map(dept => (
+                        <option key={dept.id} value={dept.nombre}>
+                            {dept.nombre}
                         </option>
                     ))}
                 </select>
             </div>
 
-            {/* Seleccionar Municipio (solo si se seleccionó un departamento) */}
-            {formData.department && departamentos[formData.department] && (
-                <div className="mb-4">
-                    <label htmlFor="municipality" className="block text-sm mb-2">Municipio:</label>
-                    <select
-                        id="municipality"
-                        name="municipality"
-                        value={formData.municipality}
-                        onChange={handleChange}
-                        className="w-full p-2 bg-gray-700 rounded"
-                    >
-                        <option value="">Selecciona un municipio</option>
-                        {departamentos[formData.department].map((municipality) => (
-                            <option key={municipality} value={municipality}>
-                                {municipality}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            )}
+            <div className="mb-6">
+                <label htmlFor="organizacion" className="block text-sm font-medium text-gray-300 mb-2">
+                    Organización:
+                </label>
+                <select
+                    id="organizacion"
+                    name="organizacion"
+                    value={organizacion}
+                    onChange={handleChange}
+                    className="block w-full border border-gray-600 bg-gray-700 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                >
+                    <option value="" disabled>
+                        Selecciona una organización
+                    </option>
+                    {organizaciones.map(org => (
+                        <option key={org.id} value={org.nombre}>
+                            {org.nombre}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
-            {/* Mostrar organizaciones registradas o formulario para nueva OAC */}
-            {formData.municipality && (
-                <div className="mt-4">
-                    {organizaciones.length > 0 ? (
-                        <div>
-                            <h2 className="text-lg mb-2">Organizaciones Registradas en {formData.municipality}:</h2>
-                            <ul className="mb-4">
-                                {organizaciones.map((org) => (
-                                    <li key={org.id} className="mb-2 flex justify-between">
-                                        {org.nombre}
-                                        <button
-                                            onClick={() => handleIngresar(org.id)}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded"
-                                        >
-                                            Ingresar
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : mostrarFormulario ? (
-                        <div>
-                            <h2 className="text-lg mb-2">Registrar Nueva OAC en {formData.municipality}:</h2>
-                            <form onSubmit={handleNuevaOACSubmit}>
-                                <div className="mb-4">
-                                    <label htmlFor="tipo" className="block text-sm mb-2">Tipo de OAC:</label>
-                                    <input
-                                        type="text"
-                                        id="tipo"
-                                        name="tipo"
-                                        value={nuevaOAC.tipo}
-                                        onChange={handleNuevaOACChange}
-                                        className="w-full p-2 bg-gray-700 rounded"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label htmlFor="nombre" className="block text-sm mb-2">Nombre de la OAC:</label>
-                                    <input
-                                        type="text"
-                                        id="nombre"
-                                        name="nombre"
-                                        value={nuevaOAC.nombre}
-                                        onChange={handleNuevaOACChange}
-                                        className="w-full p-2 bg-gray-700 rounded"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label htmlFor="nit" className="block text-sm mb-2">NIT de la OAC:</label>
-                                    <input
-                                        type="text"
-                                        id="nit"
-                                        name="nit"
-                                        value={nuevaOAC.nit}
-                                        onChange={handleNuevaOACChange}
-                                        className="w-full p-2 bg-gray-700 rounded"
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="bg-green-500 text-white px-4 py-2 rounded w-full"
-                                >
-                                    Registrar OAC
-                                </button>
-                            </form>
-                        </div>
-                    ) : null}
-                </div>
-            )}
-        </div>
+            <button
+                type="submit"
+                className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200"
+            >
+                Buscar
+            </button>
+        </form>
     );
 };
 
-export default FormularioOAC;
+export default Formulario;

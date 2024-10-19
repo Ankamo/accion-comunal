@@ -9,8 +9,8 @@ const Header = () => {
                     <Image
                         src="/LogoOac.png"
                         alt="Logo Izquierdo"
-                        width={70}
-                        height={90}
+                        width={80}
+                        height={100}
                         className="object-contain"
                     />
                 </a>

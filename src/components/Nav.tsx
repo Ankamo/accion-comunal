@@ -1,14 +1,34 @@
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 
+// Definimos los valores posibles para el menú
+type MenuKey = 'afiliados' | 'servicios' | 'quienesSomos' | 'ingresar';
+
 const Nav = () => {
+    // Estado para controlar el despliegue de los submenús
+    const [openMenu, setOpenMenu] = useState({
+        afiliados: false,
+        servicios: false,
+        quienesSomos: false,
+        ingresar: false,
+    });
+
+    // Función para alternar el submenú
+    const toggleMenu = (menu: MenuKey) => {
+        setOpenMenu((prev) => ({
+            ...prev,
+            [menu]: !prev[menu], // Alternar el valor del submenú especificado
+        }));
+    };
+
     return (
         <nav className="bg-[#131212] text-white p-4">
             <ul className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6 text-center">
                 <li>
                     <Link href="/cartelera">
-                        Cartelera
+                        Cartelera Comunal
                     </Link>
                 </li>
                 <li>
@@ -21,25 +41,90 @@ const Nav = () => {
                         Reuniones y Asambleas
                     </Link>
                 </li>
+
+                {/* Submenú Afiliados */}
+                <li className="relative">
+                    <button
+                        onClick={() => toggleMenu('afiliados')}
+                        className="hover:underline"
+                    >
+                        Afiliados
+                    </button>
+                    {openMenu.afiliados && (
+                        <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-2 z-10">
+                            <li>
+                                <Link href="/afiliados/directivos">Directivos</Link>
+                            </li>
+                            <li>
+                                <Link href="/afiliados/dignatarios">Dignatarios</Link>
+                            </li>
+                            <li>
+                                <Link href="/afiliados/afiliados">Afiliados</Link>
+                            </li>
+                        </ul>
+                    )}
+                </li>
+
                 <li>
                     <Link href="/proyectos">
                         Proyectos Comunales
                     </Link>
                 </li>
-                <li>
-                    <Link href="/servicios-comunales">
+
+                {/* Submenú Servicios Comunales */}
+                <li className="relative">
+                    <button
+                        onClick={() => toggleMenu('servicios')}
+                        className="hover:underline"
+                    >
                         Servicios Comunales
-                    </Link>
+                    </button>
+                    {openMenu.servicios && (
+                        <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-2 z-10">
+                            <li>
+                                <Link href="/servicios/certificados-afiliacion">
+                                    Certificados de Afiliación
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
-                <li>
-                    <Link href="/quienes-somos">
+
+                {/* Submenú Quiénes Somos */}
+                <li className="relative">
+                    <button
+                        onClick={() => toggleMenu('quienesSomos')}
+                        className="hover:underline"
+                    >
                         Quiénes Somos
-                    </Link>
+                    </button>
+                    {openMenu.quienesSomos && (
+                        <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-2 z-10">
+                            <li>
+                                <Link href="/quienes-somos/ubicacion">Ubicación</Link>
+                            </li>
+                            <li>
+                                <Link href="/quienes-somos/contactos">Contactos</Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
-                <li>
-                    <Link href="/ingresar">
+
+                {/* Submenú Ingresar */}
+                <li className="relative">
+                    <button
+                        onClick={() => toggleMenu('ingresar')}
+                        className="hover:underline"
+                    >
                         Ingresar
-                    </Link>
+                    </button>
+                    {openMenu.ingresar && (
+                        <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-2 z-10">
+                            <li>
+                                <Link href="/ingresar/afiliarme">Quiero Afiliarme</Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
             </ul>
         </nav>

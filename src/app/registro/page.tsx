@@ -22,6 +22,7 @@ const Registro = () => {
     const sheetNameMunicipios = 'Municipios';
     const sheetNameTiposOac = 'TipoOac';
     const sheetNameTiposUbicacion = 'TipoUbicacion';
+    const sheetNameOacRegistrados = 'OacRegistrados'; // Nombre de la hoja donde se enviarán los datos
 
     // Obtener departamentos
     useEffect(() => {
@@ -112,6 +113,46 @@ const Registro = () => {
         obtenerTiposUbicacion();
     }, []);
 
+    // Función para enviar los datos a Google Sheets
+    const enviarDatosAGoogleSheets = async () => {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetNameOacRegistrados}!A2:G:append?valueInputOption=USER_ENTERED&key=${apiKey}`;
+
+    const data = {
+        values: [
+            [
+                "", // IDRegistro (dejar vacío si se genera automáticamente)
+                selectedDepartamento, // IdDepartamento
+                selectedMunicipio, // IdMunicipio
+                selectedTipoOac, // TipoOac
+                selectedTipoUbicacion, // Tipo de Ubicación
+                nombreOac, // NombreOac
+                `${window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://accion-comunal.vercel.app'}/${selectedDepartamento.toLowerCase()}/${selectedMunicipio.toLowerCase()}/${selectedTipoOac.toLowerCase().replace(/\s+/g, '')}-${selectedTipoUbicacion.toLowerCase().replace(/\s+/g, '')}-${nombreOac.toLowerCase().replace(/\s+/g, '')}` // URL
+            ]
+        ]
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error response from Google Sheets:', errorData);
+            throw new Error('Error al enviar los datos a Google Sheets');
+        }
+
+        alert('Datos enviados correctamente a Google Sheets.');
+    } catch (error) {
+        console.error("Error al enviar datos:", error);
+        alert('Error al enviar los datos a Google Sheets. Verifica la consola para más detalles.');
+    }
+};
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -125,8 +166,11 @@ const Registro = () => {
         const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://accion-comunal.vercel.app';
         const url = `${baseUrl}/${departamentoSlug}/${municipioSlug}/${tipoOacSlug}-${tipoUbicacionSlug}-${nombreOacSlug}`; // Formato de la URL deseada
 
-        // Mostrar los datos en un cuadro de diálogo
+        // Mostrar los datos en un cuadro de diálogo y enviar a Google Sheets
         alert(`Datos Ingresados:\n\nDepartamento: ${selectedDepartamento}\nMunicipio: ${selectedMunicipio}\nTipo de OAC: ${selectedTipoOac}\nTipo de Ubicación: ${selectedTipoUbicacion}\nNombre: ${nombreOac}\n\nURL: ${url}`);
+        
+        // Llamar a la función para enviar los datos a Google Sheets
+        enviarDatosAGoogleSheets();
     };
 
     return (
@@ -146,13 +190,12 @@ const Registro = () => {
                         required
                     >
                         <option value="">Seleccione un departamento</option>
-                        {departamentos.map((departamento) => (
-                            <option key={departamento.id} value={departamento.nombre}>
-                                {departamento.nombre}
-                            </option>
+                        {departamentos.map((dep) => (
+                            <option key={dep.id} value={dep.nombre}>{dep.nombre}</option>
                         ))}
                     </select>
                 </div>
+
                 <div className="form-group">
                     <label htmlFor="municipio">Seleccione un Municipio:</label>
                     <select
@@ -160,18 +203,16 @@ const Registro = () => {
                         value={selectedMunicipio}
                         onChange={(e) => setSelectedMunicipio(e.target.value)}
                         required
-                        disabled={municipios.length === 0} // Desactivar si no hay municipios
                     >
                         <option value="">Seleccione un municipio</option>
-                        {municipios.map((municipio) => (
-                            <option key={municipio.id} value={municipio.nombre}>
-                                {municipio.nombre}
-                            </option>
+                        {municipios.map((mun) => (
+                            <option key={mun.id} value={mun.nombre}>{mun.nombre}</option>
                         ))}
                     </select>
                 </div>
+
                 <div className="form-group">
-                    <label htmlFor="tipoOac">Seleccione el Tipo de OAC:</label>
+                    <label htmlFor="tipoOac">Tipo de OAC:</label>
                     <select
                         id="tipoOac"
                         value={selectedTipoOac}
@@ -179,15 +220,14 @@ const Registro = () => {
                         required
                     >
                         <option value="">Seleccione un tipo de OAC</option>
-                        {tiposOac.map((tipo, index) => (
-                            <option key={index} value={tipo}>
-                                {tipo}
-                            </option>
+                        {tiposOac.map((tipo) => (
+                            <option key={tipo} value={tipo}>{tipo}</option>
                         ))}
                     </select>
                 </div>
+
                 <div className="form-group">
-                    <label htmlFor="tipoUbicacion">Seleccione el Tipo de Ubicación:</label>
+                    <label htmlFor="tipoUbicacion">Tipo de Ubicación:</label>
                     <select
                         id="tipoUbicacion"
                         value={selectedTipoUbicacion}
@@ -195,13 +235,12 @@ const Registro = () => {
                         required
                     >
                         <option value="">Seleccione un tipo de ubicación</option>
-                        {tiposUbicacion.map((tipo, index) => (
-                            <option key={index} value={tipo}>
-                                {tipo}
-                            </option>
+                        {tiposUbicacion.map((tipo) => (
+                            <option key={tipo} value={tipo}>{tipo}</option>
                         ))}
                     </select>
                 </div>
+
                 <div className="form-group">
                     <label htmlFor="nombreOac">Nombre de la OAC:</label>
                     <input
@@ -212,7 +251,8 @@ const Registro = () => {
                         required
                     />
                 </div>
-                <button type="submit">Registrar OAC</button>
+
+                <button type="submit">Aceptar</button>
             </form>
         </div>
     );

@@ -115,7 +115,8 @@ const Registro = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const nombreCompletoOac = `${selectedTipoOac} de ${selectedTipoUbicacion} - ${nombreOac}`;
-        const url = `/${selectedDepartamento}/${selectedMunicipio}/${nombreCompletoOac.replace(/\s+/g, '-')}`; // Reemplazar espacios por guiones
+        const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://accion-comunal.vercel.app';
+        const url = `${baseUrl}/${selectedDepartamento}/${selectedMunicipio}/${nombreCompletoOac.replace(/\s+/g, '-')}`; // Reemplazar espacios por guiones
 
         // Mostrar los datos en un cuadro de diálogo
         alert(`Datos Ingresados:\n\nDepartamento: ${selectedDepartamento}\nMunicipio: ${selectedMunicipio}\nTipo de OAC: ${selectedTipoOac}\nTipo de Ubicación: ${selectedTipoUbicacion}\nNombre: ${nombreOac}\n\nURL: ${url}`);

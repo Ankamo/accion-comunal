@@ -1,0 +1,54 @@
+/* src/styles/formulario.css */
+
+/* Estilos para el formulario */
+form {
+    background-color: #1e1e1e; /* Fondo del formulario */
+    padding: 2rem; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para el formulario */
+    margin: 1rem 0; /* Margen superior e inferior */
+}
+
+/* Estilo para los labels */
+form label {
+    display: block; /* Hace que cada etiqueta ocupe una línea completa */
+    margin-bottom: 0.5rem; /* Espaciado inferior */
+    font-weight: bold; /* Texto en negrita */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Estilo para los inputs y selects */
+form input[type="text"],
+form select {
+    width: 100%; /* Ancho completo */
+    padding: 0.75rem; /* Espaciado interno */
+    margin-bottom: 1rem; /* Margen inferior */
+    border: 1px solid #ccc; /* Bordes claros */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #2a2a2a; /* Fondo de los campos */
+    color: #ffffff; /* Color del texto */
+    transition: border 0.3s; /* Transición suave para el borde */
+}
+
+/* Cambios en el input y select al enfocar */
+form input[type="text"]:focus,
+form select:focus {
+    border-color: #6200ea; /* Cambia el color del borde al enfocar */
+    outline: none; /* Sin contorno */
+}
+
+/* Estilo para el botón de enviar */
+form button {
+    background-color: #6200ea; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto del botón */
+    padding: 0.75rem 1.5rem; /* Espaciado interno del botón */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de puntero */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+/* Cambios en el botón al pasar el mouse */
+form button:hover {
+    background-color: #3700b3; /* Cambia el color al pasar el mouse */
+}

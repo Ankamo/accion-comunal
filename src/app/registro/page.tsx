@@ -1,28 +1,39 @@
-// src/app/registro/page.tsx
-
-"use client"; // Marca este componente como un Client Component
+"use client"; // Marca este componente como Client Component
 
 import React, { useState, useEffect } from 'react';
-import '@styles/globals.css'; // Asegúrate de importar los estilos globales
+import '../../styles/formulario.css'; // Importa los estilos del formulario
 
 const Registro = () => {
-    const [departamentos, setDepartamentos] = useState<string[]>([]);
+    const [departamentos, setDepartamentos] = useState<{ id: string, nombre: string }[]>([]);
     const [selectedDepartamento, setSelectedDepartamento] = useState('');
 
     useEffect(() => {
         const obtenerDepartamentos = async () => {
-            const data = [
-                'Antioquia',
-                'Cundinamarca',
-                'Valle del Cauca',
-                'Santander',
-                'Atlántico',
-                'Bolívar',
-                'Nariño',
-                'Caldas',
-                // Agrega más departamentos según sea necesario
-            ];
-            setDepartamentos(data);
+            const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_ID;
+            const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+            const sheetName = process.env.NEXT_PUBLIC_GOOGLE_SHEET_DEPARTAMENTOS;
+
+            // Verificar si las variables de entorno están cargadas correctamente
+            console.log("Sheet ID:", sheetId);
+            console.log("API Key:", apiKey);
+            console.log("Sheet Name:", sheetName);
+
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A2:B?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                // Procesa los datos obtenidos de la API y actualiza el estado
+                const departamentosData = data.values.map((row: string[]) => ({
+                    id: row[0], // ID del departamento
+                    nombre: row[1] // Nombre del departamento
+                }));
+
+                setDepartamentos(departamentosData);
+            } catch (error) {
+                console.error("Error al obtener los departamentos:", error);
+            }
         };
 
         obtenerDepartamentos();
@@ -35,10 +46,10 @@ const Registro = () => {
     };
 
     return (
-        <div className="registro-container">
+        <div className="formulario-container">
             <h1>Registro de Juntas de Acción Comunal</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="departamento">Seleccione un Departamento:</label>
                     <select
                         id="departamento"
@@ -48,17 +59,17 @@ const Registro = () => {
                     >
                         <option value="">Seleccione un departamento</option>
                         {departamentos.map((departamento) => (
-                            <option key={departamento} value={departamento}>
-                                {departamento}
+                            <option key={departamento.id} value={departamento.nombre}>
+                                {departamento.nombre}
                             </option>
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="nombre">Nombre de la Junta:</label>
                     <input type="text" id="nombre" required />
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="direccion">Dirección:</label>
                     <input type="text" id="direccion" required />
                 </div>

@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 
 import React from 'react';
-import Header from '../components/general/header'; // Asegúrate de que la ruta sea correcta
+import Header from '../components/general/Header'; // Asegúrate de que la ruta sea correcta
 import Footer from '../components/general/Footer'; // Asegúrate de que la ruta sea correcta
 import '..//styles/globals.css'; // Importa los estilos globales
 

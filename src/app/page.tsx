@@ -1,12 +1,14 @@
 // src/app/page.tsx
-
-import Link from 'next/link';
+import Registro from './registro/page'; // Importa el componente Registro sin .tsx
 
 const Home = () => {
     return (
-        <div>
-            <h1>Bienvenido al Registro de Juntas de Acción Comunal</h1>
-            <Link href="/registro">Ir al formulario de registro</Link>
+        <div className="container">
+            <div className="main-area">
+                <main className="main-content">
+                    <Registro /> {/* Renderiza el componente Registro aquí */}
+                </main>    
+            </div>
         </div>
     );
 };

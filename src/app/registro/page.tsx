@@ -114,9 +114,16 @@ const Registro = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const nombreCompletoOac = `${selectedTipoOac} de ${selectedTipoUbicacion} - ${nombreOac}`;
+        
+        // Convertir a minúsculas y eliminar espacios
+        const departamentoSlug = selectedDepartamento.toLowerCase();
+        const municipioSlug = selectedMunicipio.toLowerCase();
+        const tipoOacSlug = selectedTipoOac.toLowerCase().replace(/\s+/g, ''); // Eliminar espacios
+        const tipoUbicacionSlug = selectedTipoUbicacion.toLowerCase().replace(/\s+/g, ''); // Eliminar espacios
+        const nombreOacSlug = nombreOac.toLowerCase().replace(/\s+/g, ''); // Eliminar espacios
+        
         const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://accion-comunal.vercel.app';
-        const url = `${baseUrl}/${selectedDepartamento}/${selectedMunicipio}/${nombreCompletoOac.replace(/\s+/g, '-')}`; // Reemplazar espacios por guiones
+        const url = `${baseUrl}/${departamentoSlug}/${municipioSlug}/${tipoOacSlug}-${tipoUbicacionSlug}-${nombreOacSlug}`; // Formato de la URL deseada
 
         // Mostrar los datos en un cuadro de diálogo
         alert(`Datos Ingresados:\n\nDepartamento: ${selectedDepartamento}\nMunicipio: ${selectedMunicipio}\nTipo de OAC: ${selectedTipoOac}\nTipo de Ubicación: ${selectedTipoUbicacion}\nNombre: ${nombreOac}\n\nURL: ${url}`);
@@ -205,7 +212,7 @@ const Registro = () => {
                         required
                     />
                 </div>
-                <button type="submit">Revisar</button>
+                <button type="submit">Registrar OAC</button>
             </form>
         </div>
     );

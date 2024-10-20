@@ -38,6 +38,8 @@ export default function Home() {
     const [tiposOac, setTiposOac] = useState<Tipo[]>([]);
     const [tiposUbicacion, setTiposUbicacion] = useState<Tipo[]>([]);
 
+    const [showTable, setShowTable] = useState(false); // Nuevo estado para mostrar la tabla
+
     const apiKey = 'AIzaSyDdbmm259ZMNXfmqwCptHtPwPcluVbb-WA'; // Reemplaza con tu API Key
     const sheetId = '1w_8hXKQVKbNMZz7jjx0K1VkqibzK3wm5M_pCIACEffo'; // Reemplaza con el ID de tu hoja de Google Sheets
 
@@ -173,55 +175,10 @@ export default function Home() {
         }
 
         try {
-            // Preparar los datos para enviar a Google Sheets
-            const body = {
-                values: [
-                    [
-                        formData.department,
-                        formData.municipality,
-                        formData.tipoOac,
-                        formData.tipoUbicacion,
-                        formData.nombreBarrio || '',
-                        '', // URL, puedes agregarla si es necesario
-                    ],
-                ],
-            };
-
-            // Hacer la petición POST a la API de Google Sheets
-            const response = await fetch(
-                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/OacRegistrados!A:H:append?valueInputOption=USER_ENTERED&key=${apiKey}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(body),
-                }
-            );
-
-            if (response.ok) {
-                alert('Datos enviados correctamente a la hoja OacRegistrados.');
-
-                // Generar la URL
-                const url = `/${formData.department.toLowerCase()}/${formData.municipality.toLowerCase()}/${formData.tipoOac.toLowerCase().replace(/\s+/g, '')}`;
-                alert(`La URL generada es: ${url}`);
-
-                // Limpiar el formulario
-                setFormData({
-                    department: '',
-                    municipality: '',
-                    tipoOac: '',
-                    tipoUbicacion: '',
-                    nombreBarrio: '',
-                });
-            } else {
-                const errorData = await response.json();
-                console.error('Error al enviar los datos a Google Sheets:', errorData);
-                throw new Error('Error al enviar los datos a Google Sheets.');
-            }
+            setShowTable(true); // Mostrar la tabla con los datos enviados
         } catch (error) {
-            console.error('Error al enviar los datos:', error);
-            alert('Hubo un error al enviar los datos.');
+            console.error('Error al procesar los datos:', error);
+            alert('Hubo un error al procesar los datos.');
         }
     };
 
@@ -320,26 +277,57 @@ export default function Home() {
                     {/* Campo Nombre del Barrio */}
                     <div>
                         <label htmlFor="nombreBarrio" className="block text-gray-300">
-                            Nombre del Barrio:
+                            Nombre del Barrio o Vereda:
                         </label>
                         <input
-                            type="text"
                             id="nombreBarrio"
                             name="nombreBarrio"
                             value={formData.nombreBarrio}
                             onChange={handleChange}
                             className="w-full border border-gray-600 bg-gray-800 text-gray-300 p-2 rounded-lg"
-                            placeholder="Ingresa el nombre del barrio o vereda"
+                            placeholder="Nombre del barrio o vereda"
                         />
                     </div>
 
+                    {/* Botón de envío */}
                     <button
                         type="submit"
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg"
                     >
-                        Enviar
+                        Revisar
                     </button>
                 </form>
+
+                {/* Mostrar la tabla si showTable es true */}
+                {showTable && (
+                    <div className="mt-8 bg-gray-800 p-4 rounded-lg">
+                        <h2 className="text-2xl text-white font-bold mb-4">Datos Diligenciados:</h2>
+                        <table className="w-full text-left text-gray-300">
+                            <tbody>
+                                <tr>
+                                    <th className="pr-4">Departamento:</th>
+                                    <td>{departamentos.find(d => d.id === formData.department)?.nombre || ''}</td>
+                                </tr>
+                                <tr>
+                                    <th className="pr-4">Municipio:</th>
+                                    <td>{municipios.find(m => m.id === formData.municipality)?.nombre || ''}</td>
+                                </tr>
+                                <tr>
+                                    <th className="pr-4">Tipo de OAC:</th>
+                                    <td>{formData.tipoOac}</td>
+                                </tr>
+                                <tr>
+                                    <th className="pr-4">Tipo de Ubicación:</th>
+                                    <td>{formData.tipoUbicacion}</td>
+                                </tr>
+                                <tr>
+                                    <th className="pr-4">Nombre del Barrio:</th>
+                                    <td>{formData.nombreBarrio}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </main>
     );

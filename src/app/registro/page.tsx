@@ -9,9 +9,9 @@ const Registro = () => {
 
     useEffect(() => {
         const obtenerDepartamentos = async () => {
-            const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_ID;
-            const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-            const sheetName = process.env.NEXT_PUBLIC_GOOGLE_SHEET_DEPARTAMENTOS;
+            const sheetId = '1w_8hXKQVKbNMZz7jjx0K1VkqibzK3wm5M_pCIACEffo';
+            const apiKey = 'AIzaSyDdbmm259ZMNXfmqwCptHtPwPcluVbb-WA';
+            const sheetName = 'Departamentos';
 
             // Verificar si las variables de entorno están cargadas correctamente
             console.log("Sheet ID:", sheetId);

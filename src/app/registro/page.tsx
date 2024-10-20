@@ -7,10 +7,13 @@ const Registro = () => {
     const [departamentos, setDepartamentos] = useState<{ id: string, nombre: string }[]>([]);
     const [municipios, setMunicipios] = useState<{ id: string, nombre: string }[]>([]);
     const [tiposOac, setTiposOac] = useState<string[]>([]);
-    
+    const [tiposUbicacion, setTiposUbicacion] = useState<string[]>([]);
+
     const [selectedDepartamento, setSelectedDepartamento] = useState('');
     const [selectedMunicipio, setSelectedMunicipio] = useState('');
     const [selectedTipoOac, setSelectedTipoOac] = useState('');
+    const [selectedTipoUbicacion, setSelectedTipoUbicacion] = useState('');
+    const [nombreOac, setNombreOac] = useState('');
 
     // Constantes de configuración
     const sheetId = '1w_8hXKQVKbNMZz7jjx0K1VkqibzK3wm5M_pCIACEffo';
@@ -18,6 +21,7 @@ const Registro = () => {
     const sheetNameDepartamentos = 'Departamentos';
     const sheetNameMunicipios = 'Municipios';
     const sheetNameTiposOac = 'TipoOac';
+    const sheetNameTiposUbicacion = 'TipoUbicacion';
 
     // Obtener departamentos
     useEffect(() => {
@@ -89,12 +93,32 @@ const Registro = () => {
         obtenerTiposOac();
     }, []);
 
+    // Obtener tipos de ubicación
+    useEffect(() => {
+        const obtenerTiposUbicacion = async () => {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetNameTiposUbicacion}!A2:A?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                const tiposUbicacionData = data.values.map((row: string[]) => row[0]); // Solo los nombres
+                setTiposUbicacion(tiposUbicacionData);
+            } catch (error) {
+                console.error("Error al obtener los tipos de ubicación:", error);
+            }
+        };
+
+        obtenerTiposUbicacion();
+    }, []);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Departamento seleccionado:', selectedDepartamento);
-        console.log('Municipio seleccionado:', selectedMunicipio);
-        console.log('Tipo de OAC seleccionado:', selectedTipoOac);
-        // Aquí puedes agregar la lógica para enviar el formulario
+        const nombreCompletoOac = `${selectedTipoOac} de ${selectedTipoUbicacion} - ${nombreOac}`;
+        const url = `/${selectedDepartamento}/${selectedMunicipio}/${nombreCompletoOac.replace(/\s+/g, '-')}`; // Reemplazar espacios por guiones
+
+        // Mostrar los datos en un cuadro de diálogo
+        alert(`Datos Ingresados:\n\nDepartamento: ${selectedDepartamento}\nMunicipio: ${selectedMunicipio}\nTipo de OAC: ${selectedTipoOac}\nTipo de Ubicación: ${selectedTipoUbicacion}\nNombre: ${nombreOac}\n\nURL: ${url}`);
     };
 
     return (
@@ -154,7 +178,33 @@ const Registro = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit">Registrar</button>
+                <div className="form-group">
+                    <label htmlFor="tipoUbicacion">Seleccione el Tipo de Ubicación:</label>
+                    <select
+                        id="tipoUbicacion"
+                        value={selectedTipoUbicacion}
+                        onChange={(e) => setSelectedTipoUbicacion(e.target.value)}
+                        required
+                    >
+                        <option value="">Seleccione un tipo de ubicación</option>
+                        {tiposUbicacion.map((tipo, index) => (
+                            <option key={index} value={tipo}>
+                                {tipo}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="nombreOac">Nombre de la OAC:</label>
+                    <input
+                        type="text"
+                        id="nombreOac"
+                        value={nombreOac}
+                        onChange={(e) => setNombreOac(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Revisar</button>
             </form>
         </div>
     );

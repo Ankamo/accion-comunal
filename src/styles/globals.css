@@ -6,59 +6,42 @@
 
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #121212; /* Fondo oscuro */
-    color: #ffffff; /* Texto claro */
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    /* Fondo oscuro */
+    color: #ffffff;
+    /* Texto blanco */
 }
 
-h1 {
+header {
+    background-color: #1e1e1e;
+    /* Color del encabezado */
+    padding: 1rem;
     text-align: center;
-    margin: 20px 0;
 }
 
-.registro-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1e1e1e; /* Fondo del formulario */
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+nav ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+nav ul li {
+    display: inline;
+    margin: 0 15px;
 }
 
-label {
-    margin-bottom: 5px;
+nav ul li a {
+    color: #ffffff;
+    /* Color de los enlaces */
+    text-decoration: none;
 }
 
-select, input[type="text"], button {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 4px;
-}
-
-select {
-    background-color: #333; /* Fondo del select */
-    color: #ffffff; /* Texto del select */
-}
-
-input[type="text"] {
-    background-color: #333; /* Fondo de los inputs */
-    color: #ffffff; /* Texto de los inputs */
-}
-
-button {
-    background-color: #6200ea; /* Color del botón */
-    color: #ffffff; /* Color del texto del botón */
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #3700b3; /* Color del botón en hover */
+footer {
+    background-color: #1e1e1e;
+    /* Color del pie de página */
+    padding: 1rem;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

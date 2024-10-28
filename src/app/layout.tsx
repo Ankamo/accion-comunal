@@ -6,24 +6,24 @@ import Footer from '../components/Footer'; // Asegúrate de que la ruta sea corr
 import '../styles/globals.css'; // Importa los estilos globales
 
 export const metadata = {
-  title: 'Registro de Juntas de Acción Comunal',
-  description: 'Formulario para registrar juntas de acción comunal',
+    title: 'Registro de Juntas de Acción Comunal',
+    description: 'Formulario para registrar juntas de acción comunal',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <html lang="es-CO">
-      <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </head>
-      <body>
-        <Header /> {/* Renderiza el componente Header */}
-        <main>{children}</main>
-        <Footer /> {/* Renderiza el componente Footer */}
-      </body>
-    </html>
-  );
+    return (
+        <html lang="es-CO">
+            <head>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+            </head>
+            <body>
+                <Header /> {/* Renderiza el componente Header */}
+                <main>{children}</main>
+                <Footer /> {/* Renderiza el componente Footer */}
+            </body>
+        </html>
+    );
 };
 
 export default RootLayout;

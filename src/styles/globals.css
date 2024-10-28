@@ -13,6 +13,41 @@ body {
 header {
   text-align: center;
   padding: 20px;
+  background-color: #232323; /* Color de fondo para el header */
+  border-bottom: 2px solid #fff; /* Línea inferior para el header */
+}
+
+header h1 {
+  margin: 0; /* Eliminar margen para el título */
+  color: #fff; /* Color del título */
+}
+
+nav {
+  margin-top: 10px; /* Espacio entre el título y el menú */
+}
+
+nav ul {
+  list-style-type: none; /* Eliminar viñetas de la lista */
+  padding: 0; /* Eliminar padding */
+  display: flex; /* Disposición horizontal */
+  justify-content: center; /* Centrar los elementos */
+}
+
+nav ul li {
+  margin: 0 15px; /* Espacio horizontal entre elementos de la lista */
+}
+
+nav a {
+  color: #eaeaea; /* Color de los enlaces */
+  text-decoration: none; /* Sin subrayado */
+  padding: 8px 12px; /* Espacio interno */
+  border-radius: 4px; /* Bordes redondeados */
+  transition: background-color 0.3s; /* Transición suave para el fondo */
+}
+
+nav a:hover {
+  background-color: #007bff; /* Color de fondo al pasar el mouse */
+  color: #fff; /* Cambiar color del texto al pasar el mouse */
 }
 
 main {

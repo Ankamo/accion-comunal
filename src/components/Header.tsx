@@ -21,7 +21,7 @@ const Header: React.FC = () => {
                         <Link href="/ingresar">Ingresar</Link>
                         <ul className="sub-menu">
                             <li>
-                                <Link href="/registrar-confederacion">Registrar Confederación</Link>
+                                <Link href="/registrar-organizacion">Registrar Organización</Link>
                             </li>
                         </ul>
                     </li>

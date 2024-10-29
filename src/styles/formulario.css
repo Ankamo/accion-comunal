@@ -105,3 +105,20 @@ p {
 .visitar-sitio:hover {
     background-color: #218838; /* Color de fondo al pasar el ratón */
 }
+
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem; /* Espacio entre los elementos */
+    padding: 0;
+}
+
+.nav-list li {
+    cursor: pointer;
+    color: blue; /* Cambia el color como prefieras */
+    transition: color 0.3s; /* Efecto de transición */
+}
+
+.nav-list li:hover {
+    color: darkblue; /* Color al pasar el mouse */
+}

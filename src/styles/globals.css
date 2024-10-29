@@ -12,7 +12,7 @@ body {
 
 header {
   text-align: center;
-  padding: 20px;
+  padding: 0;
   background-color: #232323; /* Color de fondo para el header */
   border-bottom: 2px solid #fff; /* Línea inferior para el header */
 }
@@ -23,7 +23,7 @@ header h1 {
 }
 
 nav {
-  margin-top: 10px; /* Espacio entre el título y el menú */
+  margin-top: 0; /* Espacio entre el título y el menú */
 }
 
 nav ul {
@@ -34,7 +34,7 @@ nav ul {
 }
 
 nav ul li {
-  margin: 0 15px; /* Espacio horizontal entre elementos de la lista */
+  margin: 0; /* Espacio horizontal entre elementos de la lista */
   position: relative; /* Para el submenú */
 }
 
@@ -78,7 +78,7 @@ main {
   align-items: center;
   justify-content: center;
   flex: 1; /* Permite que el main ocupe el espacio restante */
-  padding: 20px;
+  padding: 0;
   background-color: #1b1b1b;
   border-radius: 8px;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);

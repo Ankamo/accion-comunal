@@ -35,6 +35,7 @@ nav ul {
 
 nav ul li {
   margin: 0 15px; /* Espacio horizontal entre elementos de la lista */
+  position: relative; /* Para el submenú */
 }
 
 nav a {
@@ -42,12 +43,33 @@ nav a {
   text-decoration: none; /* Sin subrayado */
   padding: 8px 12px; /* Espacio interno */
   border-radius: 4px; /* Bordes redondeados */
-  transition: background-color 0.3s; /* Transición suave para el fondo */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave para el fondo */
 }
 
 nav a:hover {
   background-color: #007bff; /* Color de fondo al pasar el mouse */
   color: #fff; /* Cambiar color del texto al pasar el mouse */
+}
+
+/* Estilos para el submenú */
+.sub-menu {
+  display: none; /* Ocultar el submenú por defecto */
+  position: absolute; /* Posicionarlo sobre el menú padre */
+  top: 100%; /* Colocarlo justo debajo */
+  left: 0; /* Alinear a la izquierda */
+  background-color: #1f1f1f; /* Fondo oscuro */
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1; /* Asegurarse de que el submenú esté por encima */
+}
+
+nav ul li:hover .sub-menu {
+  display: block; /* Mostrar el submenú al pasar el ratón */
+}
+
+.sub-menu li {
+  margin: 0; /* Sin margen adicional */
 }
 
 main {

@@ -9,19 +9,24 @@ const Header: React.FC = () => {
             <nav>
                 <ul>
                     <li>
-                        <Link href="/registrar-junta-comunal">Registrar Junta de Acción Comunal</Link>
+                        <Link href="/cartelera-comunal">Cartelera Comunal</Link>
                     </li>
                     <li>
-                        <Link href="/registrar-junta-vivienda">Registrar Junta de Vivienda Comunal</Link>
+                        <Link href="/convocatorias-proyectos">Convocatorias de Proyectos</Link>
                     </li>
                     <li>
-                        <Link href="/registrar-asociacion">Registrar Asociación Comunal</Link>
+                        <Link href="/normatividad-comunal">Normatividad Comunal</Link>
                     </li>
                     <li>
-                        <Link href="/registrar-federacion">Registrar Federación Departamental</Link>
+                        <Link href="/ingresar">Ingresar</Link>
+                        <ul className="sub-menu">
+                            <li>
+                                <Link href="/registrar">Registrar</Link>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <Link href="/registrar-confederacion">Registrar Confederación Nacional</Link>
+                        <Link href="/asistente-virtual">Asistente Virtual</Link>
                     </li>
                 </ul>
             </nav>

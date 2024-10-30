@@ -126,7 +126,8 @@ const Page: React.FC = () => {
         setMessage("");
     
         const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/' : 'https://accion-comunal.vercel.app/';
-        const generatedUrl = `${baseUrl}${selectedTipoOac.replace(/\s+/g, '-').toLowerCase()}-de-${selectedDepartamentoName.replace(/\s+/g, '-').toLowerCase()}-${selectedMunicipio.replace(/\s+/g, '-').toLowerCase()}`;
+        // Cambiar el orden de municipio y departamento en la URL generada
+        const generatedUrl = `${baseUrl}${selectedTipoOac.replace(/\s+/g, '-').toLowerCase()}-de-${selectedMunicipio.replace(/\s+/g, '-').toLowerCase()}-${selectedDepartamentoName.replace(/\s+/g, '-').toLowerCase()}`;
         setUrlOac(generatedUrl);
     
         const formData = new FormData();
@@ -160,6 +161,7 @@ const Page: React.FC = () => {
             setLoading(false);
         }
     };
+    
 
     return (
         <div>

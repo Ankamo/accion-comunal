@@ -8,7 +8,8 @@ import Jac from '../../components/formulario/Jac';
 import Jvc from '../../components/formulario/Jvc';
 
 const Page: React.FC = () => {
-    const [activeComponent, setActiveComponent] = useState<string>(window.location.hash.slice(1) || 'confederacion');
+    // Inicializa con un valor por defecto
+    const [activeComponent, setActiveComponent] = useState<string>('confederacion');
 
     // Cambia el componente activo y actualiza la URL con el hash
     const handleNavClick = (component: string) => {
@@ -18,9 +19,14 @@ const Page: React.FC = () => {
 
     // Actualiza el componente activo cuando cambia el hash en la URL
     useEffect(() => {
+        // Establece el componente activo inicial basado en el hash de la URL, si está presente
+        const initialComponent = window.location.hash.slice(1) || 'confederacion';
+        setActiveComponent(initialComponent);
+
         const onHashChange = () => {
             setActiveComponent(window.location.hash.slice(1) || 'confederacion');
         };
+
         window.addEventListener('hashchange', onHashChange);
 
         return () => window.removeEventListener('hashchange', onHashChange);
@@ -59,4 +65,4 @@ const Page: React.FC = () => {
     );
 };
 
-export default Page;
+export default Pag

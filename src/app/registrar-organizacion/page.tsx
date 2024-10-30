@@ -65,4 +65,4 @@ const Page: React.FC = () => {
     );
 };
 
-export default Pag
+export default Page;

@@ -5,7 +5,6 @@ import Confederacion from '../../components/formulario/Confederacion';
 import Federacion from '../../components/formulario/Federacion';
 import Asociacion from '../../components/formulario/Asociacion';
 import Jac from '../../components/formulario/Jac';
-import Jvc from '../../components/formulario/Jvc';
 
 const Page: React.FC = () => {
     // Inicializa con un valor por defecto
@@ -42,8 +41,6 @@ const Page: React.FC = () => {
                 return <Asociacion />;
             case 'jac':
                 return <Jac />;
-            case 'jvc':
-                return <Jvc />;
             default:
                 return null;
         }
@@ -56,8 +53,7 @@ const Page: React.FC = () => {
                     <li onClick={() => handleNavClick('confederacion')}>Confederación</li>
                     <li onClick={() => handleNavClick('federacion')}>Federación</li>
                     <li onClick={() => handleNavClick('asociacion')}>Asociación</li>
-                    <li onClick={() => handleNavClick('jac')}>JAC</li>
-                    <li onClick={() => handleNavClick('jvc')}>JVC</li>
+                    <li onClick={() => handleNavClick('jac')}>JAC / JVC</li>
                 </ul>
             </nav>
             {renderComponent()}

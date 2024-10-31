@@ -12,21 +12,36 @@ const Header: React.FC = () => {
                         <Link href="/cartelera-comunal">Cartelera Comunal</Link>
                     </li>
                     <li>
-                        <Link href="/convocatorias-proyectos">Convocatorias de Proyectos</Link>
+                        <Link href="/eventos-y-actividades">Eventos y Actividades</Link>
                     </li>
                     <li>
-                        <Link href="/normatividad-comunal">Normatividad Comunal</Link>
+                        <Link href="/reuniones-y-asambleas">Reuniones y Asambleas</Link>
                     </li>
                     <li>
-                        <Link href="/ingresar">Ingresar</Link>
+                        <Link href="/afiliados">Afiliados</Link>
                         <ul className="sub-menu">
                             <li>
-                                <Link href="/registrar-organizacion">Registrar Organización</Link>
+                                <Link href="/junta-directiva">Junta Directiva</Link>
+                            </li>
+                            <li>
+                                <Link href="/dignatarios">Dignatarios</Link>
+                            </li>
+                            <li>
+                                <Link href="/afiliados">Afiliados</Link>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <Link href="/asistente-virtual">Asistente Virtual</Link>
+                        <Link href="/proyectos-comunales">Proyectos Comunales</Link>
+                    </li>
+                    <li>
+                        <Link href="/servicios-comunales">Servicios Comunales</Link>
+                    </li>
+                    <li>
+                        <Link href="/quienes-somos">¿Quiénes Somos?</Link>
+                    </li>
+                    <li>
+                        <Link href="/ingresar">Ingresar</Link>
                     </li>
                 </ul>
             </nav>

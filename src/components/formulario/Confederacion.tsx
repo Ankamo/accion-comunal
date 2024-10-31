@@ -5,7 +5,6 @@ import { sheet_Id, api_Key, sheetNameTipos_Oac } from "../../../secret";
 import '../../styles/formulario.css';
 
 interface Option {
-    id: string;
     name: string;
 }
 
@@ -16,7 +15,7 @@ const Page: React.FC = () => {
     const [message, setMessage] = useState('');
     const [urlOac, setUrlOac] = useState('');
 
-    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSecxBWV0IyEWtQi6H9vm8ouGECY-TYiJkFLv4oapPvy9KJOsA/formResponse";
+    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfvmYulfVx44LnNU7Ik_QdWNfEjuZRqIf16AAWsodAXExGFsw/formResponse";
     const fields = {
         tipoOac: "entry.846032752",
         nombreOac: "entry.1030059550",
@@ -31,7 +30,7 @@ const Page: React.FC = () => {
             const data = await response.json();
 
             if (data.values) {
-                const options = data.values.map((name: [string], index: number) => ({ id: `${index + 1}`, name: name[0] }));
+                const options = data.values.map((name: [string]) => ({ name: name[0] })); // Usar solo el nombre
                 setTiposOac(options);
             } else {
                 console.warn("No se encontraron datos en la hoja de TiposOac.");
@@ -55,37 +54,42 @@ const Page: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (selectedTipoOac === 'Confederación Nacional de Acción Comunal') {
-            setLoading(true);
-            setMessage("");
+        if (!selectedTipoOac) {
+            setMessage("Por favor selecciona un tipo de organización.");
+            return;
+        }
 
-            const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/' : 'https://accion-comunal.vercel.app/';
-            const generatedUrl = `${baseUrl}${selectedTipoOac.replace(/\s+/g, '-').toLowerCase()}`;
-            setUrlOac(generatedUrl);
+        setLoading(true);
+        setMessage("");
 
-            const formData = new FormData();
-            formData.append(fields.tipoOac, selectedTipoOac);
-            formData.append(fields.nombreOac, selectedTipoOac); // Sin el nombre de departamento
-            formData.append(fields.urlOac, generatedUrl);
+        const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/' : 'https://accion-comunal.vercel.app/';
+        const generatedUrl = `${baseUrl}${selectedTipoOac.replace(/\s+/g, '-').toLowerCase()}`;
+        setUrlOac(generatedUrl);
 
-            try {
-                const response = await fetch(googleFormUrl, {
-                    method: "POST",
-                    body: formData,
-                });
+        const formData = new FormData();
+        formData.append(fields.tipoOac, selectedTipoOac);
+        formData.append(fields.nombreOac, selectedTipoOac); // Usar el nombre del tipo seleccionado
+        formData.append(fields.urlOac, generatedUrl);
 
-                if (response.ok) {
-                    setMessage("Formulario enviado exitosamente.");
-                    setSelectedTipoOac('');
-                } else {
-                    setMessage("Error al enviar el formulario. Intenta nuevamente.");
-                }
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
-                setMessage("Formulario enviado exitosamente.");
-            } finally {
-                setLoading(false);
+        try {
+            const response = await fetch(googleFormUrl, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                setMessage("Formulario enviado exitosamente."); // Mensaje de éxito
+                setSelectedTipoOac(''); // Reiniciar selección
+            } else {
+                const errorResponse = await response.text(); // Obtener texto de error para mayor claridad
+                console.error("Error de respuesta:", errorResponse);
+                setMessage("Error al enviar el formulario. Intenta nuevamente.");
             }
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+            setMessage("Formulario enviado exitosamente.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -96,34 +100,29 @@ const Page: React.FC = () => {
                 <label htmlFor="tipoOac">Selecciona un tipo de organización:</label>
                 <select id="tipoOac" value={selectedTipoOac} onChange={handleChange} required>
                     <option value="">Selecciona un tipo de organización</option>
-                    {tiposOac.map((tipo) => (
-                        <option key={tipo.id} value={tipo.name}>{tipo.name}</option>
+                    {tiposOac.map((tipo, index) => (
+                        <option key={index} value={tipo.name}>{tipo.name}</option>
                     ))}
                 </select>
 
-                {/* Mostrar el campo de nombre solo si se selecciona un tipo */}
                 {selectedTipoOac && (
                     <div className="nombre-oac">
                         <label htmlFor="nombreOac">Nombre de la Organización</label>
                         <input
                             type="text"
                             id="nombreOac"
-                            value={selectedTipoOac} // Usar el nombre del tipo seleccionado
+                            value={selectedTipoOac}
                             readOnly
                         />
                     </div>
                 )}
 
-                {/* Mostrar botón de "Enviar" solo si se selecciona "Confederación Nacional de Acción Comunal" */}
-                {selectedTipoOac === 'Confederación Nacional de Acción Comunal' && (
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Esperando..." : "Enviar"}
-                    </button>
-                )}
+                <button type="submit" disabled={loading}>
+                    {loading ? "Esperando..." : "Enviar"}
+                </button>
 
-                {message && <p className="message">{message}</p>}
+                {message && <p className="message">{message}</p>} {/* Mostrar mensaje aquí */}
 
-                {/* Mostrar el botón "Visitar sitio web" solo si la URL ha sido generada */}
                 {urlOac && (
                     <div className="url-oac">
                         <label htmlFor="urlOac">URL de la OAC Registrada</label>

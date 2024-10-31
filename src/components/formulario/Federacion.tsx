@@ -19,7 +19,7 @@ const Page: React.FC = () => {
     const [urlOac, setUrlOac] = useState('');
     const [nombreOac, setNombreOac] = useState('');
 
-    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfYZH7V49DOwpqcGB8VXtB4HEzjAp5M6tYieRmr6Jq3E1LpFw/formResponse";
+    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfvmYulfVx44LnNU7Ik_QdWNfEjuZRqIf16AAWsodAXExGFsw/formResponse";
     const fields = {
         tipoOac: "entry.846032752",
         nombreOac: "entry.1030059550",

@@ -22,13 +22,13 @@ const Page: React.FC = () => {
     const [urlOac, setUrlOac] = useState('');
     const [nombreOac, setNombreOac] = useState('');
 
-    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSeeaN5IvUKh26FyLeEforcnTYrlSChayI0Jq22sVcjb5ABW-A/formResponse";
+    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfvmYulfVx44LnNU7Ik_QdWNfEjuZRqIf16AAWsodAXExGFsw/formResponse";
     const fields = {
         tipoOac: "entry.846032752",
         nombreOac: "entry.1030059550",
         departamento: "entry.989077079",
-        municipio: "entry.1164535605",
         urlOac: "entry.1982445228",
+        municipio: "entry.1164535605",
     };
 
     const fetchTiposOac = async () => {

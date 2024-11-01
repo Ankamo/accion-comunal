@@ -1,10 +1,10 @@
-// src/app/[oacPath]/eventos-y-actividades/page.tsx
+// src/app/[oacPath]/page.tsx
 'use client'
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
-const EventosYActividades = () => {
+const OACPage = () => {
     const pathname = usePathname(); // Captura la ruta actual
     const segments = pathname.split('/'); // Divide la ruta en segmentos
     const oacName = segments[1]; // Captura el nombre de la OAC desde el primer segmento de la URL
@@ -35,11 +35,11 @@ const EventosYActividades = () => {
 
     return (
         <div>
-            <h1>Eventos y Actividades</h1>
+            <h1>Bienvenido a la Página de la OAC</h1>
             <h2>{oacFormattedName}</h2> {/* Muestra el nombre de la OAC formateado */}
-            <p>Aquí se mostrará la información de eventos y actividades.</p>
+            <p>Esta es la página principal para la organización {oacFormattedName}.</p>
         </div>
     );
 };
 
-export default EventosYActividades;
+export default OACPage;

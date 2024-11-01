@@ -1,0 +1,28 @@
+/* src/styles/nav.css */
+nav {
+    background: #333; /* Color de fondo del navbar */
+    padding: 1rem; /* Espaciado interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+}
+
+ul {
+    list-style: none; /* Eliminar viñetas */
+    display: flex; /* Usar flexbox para la disposición */
+    gap: 20px; /* Espacio entre elementos */
+    padding: 0; /* Sin padding */
+    margin: 0; /* Sin margen */
+}
+
+li {
+    color: white; /* Color de texto */
+    transition: color 0.3s; /* Transición suave para el color */
+}
+
+li:hover {
+    color: #ffa500; /* Cambiar a naranja al pasar el mouse */
+}
+
+.active {
+    font-weight: bold; /* Resaltar el enlace activo */
+    border-bottom: 2px solid #ffa500; /* Subrayado en el enlace activo */
+}

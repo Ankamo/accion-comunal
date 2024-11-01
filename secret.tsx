@@ -7,3 +7,4 @@ export const sheetName_Municipios = 'Municipios';
 export const sheetNameTipos_Oac = 'TipoOac';
 export const sheetNameTiposUbicacion = 'TipoUbicacion';
 export const oacRegistrados = 'OacRegistrados';
+export const JacRegistradas = 'JacRegistradas';

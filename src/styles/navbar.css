@@ -2,7 +2,7 @@
 
 nav {
     background: #333; /* Color de fondo del navbar */
-    padding: 1rem; /* Espaciado interno */
+    padding: 0.1rem; /* Espaciado interno reducido */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil */
     position: relative; /* Asegura que los elementos se posicionen correctamente */
 }
@@ -16,8 +16,23 @@ ul {
     overflow: hidden; /* Oculta el contenido cuando no está visible */
     display: flex; /* Mostrar flexbox por defecto */
     justify-content: center; /* Centrar los elementos en el contenedor */
-    gap: 30px; /* Espacio entre elementos */
+    gap: 10px; /* Espacio reducido entre elementos */
     text-align: center; /* Centrar el texto en los elementos */
+}
+
+li {
+    color: white; /* Color de texto */
+    transition: color 0.3s; /* Transición suave para el color */
+    padding: 0.1rem; /* Espaciado interno reducido */
+}
+
+li:hover {
+    color: #ffa500; /* Cambiar a naranja al pasar el mouse */
+}
+
+.active {
+    font-weight: bold; /* Resaltar el enlace activo */
+    border-bottom: 2px solid #ffa500; /* Subrayado en el enlace activo */
 }
 
 /* Ocultar el menú por defecto en dispositivos móviles */
@@ -39,20 +54,6 @@ ul {
     ul.hide {
         display: none; /* Asegura que se oculte correctamente */
     }
-}
-
-li {
-    color: white; /* Color de texto */
-    transition: color 0.3s; /* Transición suave para el color */
-}
-
-li:hover {
-    color: #ffa500; /* Cambiar a naranja al pasar el mouse */
-}
-
-.active {
-    font-weight: bold; /* Resaltar el enlace activo */
-    border-bottom: 2px solid #ffa500; /* Subrayado en el enlace activo */
 }
 
 /* Estilos para el menú hamburguesa */

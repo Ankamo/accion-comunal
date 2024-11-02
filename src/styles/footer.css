@@ -1,0 +1,18 @@
+/* src/components/footer.css */
+
+.footer {
+    background-color: #1a1a1a; /* Fondo oscuro */
+    padding: 20px; /* Espaciado interno */
+    text-align: center; /* Centrar el texto */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.7); /* Sombra más pronunciada */
+    border-radius: 10px; /* Bordes redondeados */
+    width: 100%; /* Ancho completo */
+    position: relative; /* Posición relativa */
+}
+
+.footer-text {
+    color: #e0e0e0; /* Color del texto en gris claro */
+    margin: 0; /* Sin margen */
+    font-size: 1rem; /* Tamaño de fuente del texto */
+    opacity: 0.8; /* Opacidad sutil */
+}

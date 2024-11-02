@@ -38,6 +38,8 @@ const OACPage = () => {
             <h1>Bienvenido a la Página de la OAC</h1>
             <h2>{oacFormattedName}</h2> {/* Muestra el nombre de la OAC formateado */}
             <p>Esta es la página principal para la organización {oacFormattedName}.</p>
+            <p>Nos dedicamos a promover el desarrollo comunitario, fomentando la participación activa de los miembros en actividades que mejoren nuestra comunidad.</p>
+            <p>Explora nuestras secciones para conocer más sobre nuestros proyectos, eventos y cómo puedes involucrarte.</p>
         </div>
     );
 };

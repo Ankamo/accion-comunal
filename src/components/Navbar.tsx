@@ -1,14 +1,15 @@
 // src/components/Navbar.tsx
 
-'use client'
+'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import '../styles/navbar.css'; // Importa el archivo CSS
 
 const Navbar = () => {
     const pathname = usePathname(); // Captura la ruta actual
+    const [menuOpen, setMenuOpen] = useState(false); // Estado para el menú hamburguesa
 
     // Verifica si la ruta actual es la página principal
     if (pathname === '/') return null;
@@ -29,12 +30,19 @@ const Navbar = () => {
         { label: 'Asistente Virtual', href: `/${oacPath}/asistente-virtual` }
     ];
 
+    const toggleMenu = () => {
+        setMenuOpen(prevState => !prevState); // Alternar el estado del menú
+    };
+
     return (
         <nav>
-            <ul>
+            <div className="hamburger" onClick={toggleMenu}>
+                &#9776; {/* Icono de hamburguesa */}
+            </div>
+            <ul className={menuOpen ? 'show' : 'hide'}>
                 {navLinks.map(({ label, href }) => (
                     <li key={href}>
-                        <Link href={href} className={pathname === href ? 'active' : ''}>
+                        <Link href={href} className={pathname === href ? 'active' : ''} onClick={() => setMenuOpen(false)}>
                             {label}
                         </Link>
                     </li>

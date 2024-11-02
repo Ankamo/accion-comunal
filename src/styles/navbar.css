@@ -1,15 +1,44 @@
+/* navbar.css */
+
 nav {
     background: #333; /* Color de fondo del navbar */
     padding: 1rem; /* Espaciado interno */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+    position: relative; /* Asegura que los elementos se posicionen correctamente */
 }
 
 ul {
     list-style: none; /* Eliminar viñetas */
-    display: flex; /* Usar flexbox para la disposición */
-    gap: 20px; /* Espacio entre elementos */
     padding: 0; /* Sin padding */
     margin: 0; /* Sin margen */
+    flex-direction: row; /* Mantener en fila por defecto */
+    transition: max-height 0.3s ease; /* Transición suave para la altura */
+    overflow: hidden; /* Oculta el contenido cuando no está visible */
+    display: flex; /* Mostrar flexbox por defecto */
+    justify-content: center; /* Centrar los elementos en el contenedor */
+    gap: 30px; /* Espacio entre elementos */
+    text-align: center; /* Centrar el texto en los elementos */
+}
+
+/* Ocultar el menú por defecto en dispositivos móviles */
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column; /* Cambia a columna en móvil */
+        position: absolute; /* Posiciona el menú de manera absoluta */
+        top: 100%; /* Coloca el menú debajo de la barra de navegación */
+        left: 0; /* Alinear a la izquierda */
+        background: #333; /* Color de fondo para el menú */
+        width: 100%; /* Ancho completo */
+        display: none; /* Ocultar menú por defecto */
+    }
+
+    ul.show {
+        display: flex; /* Muestra el menú cuando está abierto */
+    }
+
+    ul.hide {
+        display: none; /* Asegura que se oculte correctamente */
+    }
 }
 
 li {
@@ -24,4 +53,19 @@ li:hover {
 .active {
     font-weight: bold; /* Resaltar el enlace activo */
     border-bottom: 2px solid #ffa500; /* Subrayado en el enlace activo */
+}
+
+/* Estilos para el menú hamburguesa */
+.hamburger {
+    display: none; /* Ocultar por defecto */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+    color: white; /* Color del icono de hamburguesa */
+    font-size: 24px; /* Tamaño del icono */
+}
+
+/* Mostrar el icono de hamburguesa en dispositivos móviles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Mostrar el icono de hamburguesa en móvil */
+    }
 }

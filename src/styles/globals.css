@@ -5,7 +5,7 @@ body {
   color: #eaeaea;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Mantener al menos el 100% de la altura de la ventana */
 }
 
 header {
@@ -13,6 +13,16 @@ header {
   padding: 0;
   background-color: #232323;
   border-bottom: 2px solid #fff;
+}
+
+.main-content {
+  flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
+  padding: 20px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+  max-width: 800px;
+  margin: 20px auto;
 }
 
 header h1 {
@@ -68,6 +78,7 @@ nav ul li:hover .sub-menu {
 }
 
 .main-content {
+  flex: 1; /* Esto permite que el contenido principal ocupe el espacio restante */
   padding: 20px;
   background-color: #2a2a2a;
   border-radius: 8px;
@@ -87,13 +98,6 @@ p {
   color: #d3d3d3;
 }
 
-footer {
-  background-color: #232323;
-  padding: 20px;
-  text-align: center;
-  color: #eaeaea;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-}
 
 button {
   background-color: #ff7043;
@@ -122,4 +126,25 @@ input[type="text"], input[type="email"], textarea {
 input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
   border-color: #007bff;
   outline: none;
+}
+
+/* src/components/footer.css */
+
+.footer {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 20px; /* Espaciado interno */
+  text-align: center; /* Centrar el texto */
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.7); /* Sombra más pronunciada */
+  border-radius: 10px; /* Bordes redondeados */
+  margin-top: 20px; /* Espacio superior */
+  transition: background-color 0.3s; /* Transición suave para el fondo */
+  width: 100%; /* Ancho completo */
+  position: relative; /* Posición relativa para garantizar que no se superponga a otros elementos */
+}
+
+.footer-text {
+  color: #e0e0e0; /* Color del texto en gris claro */
+  margin: 0; /* Sin margen */
+  font-size: 1rem; /* Tamaño de fuente del texto */
+  opacity: 0.8; /* Opacidad sutil */
 }

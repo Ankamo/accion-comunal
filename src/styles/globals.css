@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box; /* Asegurarse de que el tamaño del elemento incluye padding y borde */
+  margin: 0; /* Eliminar márgenes por defecto */
+  padding: 0; /* Eliminar padding por defecto */
+}
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -10,9 +16,11 @@ body {
 
 header {
   text-align: center;
-  padding: 0;
   background-color: #232323;
   border-bottom: 2px solid #fff;
+  width: 100%; /* Asegúrate de que el header ocupe todo el ancho */
+  padding: 0; /* Sin padding para evitar espacio interno */
+  margin: 0; /* Sin margen para evitar espacio externo */
 }
 
 .main-content {
@@ -22,23 +30,20 @@ header {
   border-radius: 8px;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
   max-width: 800px;
-  margin: 20px auto;
+  margin: 20px auto; /* Esto se queda así para centrar el contenido */
 }
 
 header h1 {
-  margin: 0;
   color: #fff;
 }
 
 nav {
   background-color: #1f1f1f;
   padding: 10px 0;
-  margin-top: 0;
 }
 
 nav ul {
   list-style-type: none;
-  padding: 0;
   display: flex;
   justify-content: center;
 }
@@ -77,16 +82,6 @@ nav ul li:hover .sub-menu {
   display: block;
 }
 
-.main-content {
-  flex: 1; /* Esto permite que el contenido principal ocupe el espacio restante */
-  padding: 20px;
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
-  max-width: 800px;
-  margin: 20px auto;
-}
-
 h2, h3 {
   color: #fff;
   margin-bottom: 10px;
@@ -94,10 +89,8 @@ h2, h3 {
 }
 
 p {
-  margin: 0;
   color: #d3d3d3;
 }
-
 
 button {
   background-color: #ff7043;
@@ -128,8 +121,7 @@ input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
   outline: none;
 }
 
-/* src/components/footer.css */
-
+/* Estilos para el footer */
 .footer {
   background-color: #1a1a1a; /* Fondo oscuro */
   padding: 20px; /* Espaciado interno */
@@ -139,12 +131,10 @@ input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
   margin-top: 20px; /* Espacio superior */
   transition: background-color 0.3s; /* Transición suave para el fondo */
   width: 100%; /* Ancho completo */
-  position: relative; /* Posición relativa para garantizar que no se superponga a otros elementos */
 }
 
 .footer-text {
   color: #e0e0e0; /* Color del texto en gris claro */
-  margin: 0; /* Sin margen */
   font-size: 1rem; /* Tamaño de fuente del texto */
   opacity: 0.8; /* Opacidad sutil */
 }

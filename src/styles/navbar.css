@@ -5,11 +5,10 @@ nav {
     padding: 0.1rem 0; /* Espaciado interno reducido (solo arriba y abajo) */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil */
     position: relative; /* Asegura que los elementos se posicionen correctamente */
-    width: 100vw; /* Cambia a 100vw para ocupar todo el ancho del viewport */
-    left: 50%; /* Centra el nav */
-    transform: translateX(-50%); /* Ajusta el nav a la izquierda para centrarlo */
-    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho total */
     margin: 0; /* Sin margen para asegurarse de que esté alineado con el borde */
+    width: 100%; /* Asegura que el nav ocupe todo el ancho de la página */
+    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho total */
+    margin-top: auto;
 }
 
 ul {

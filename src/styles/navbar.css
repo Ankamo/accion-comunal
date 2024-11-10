@@ -1,76 +1,172 @@
-/* navbar.css */
-
-nav {
-    background: #333; /* Color de fondo del navbar */
-    padding: 0.1rem 0; /* Espaciado interno reducido (solo arriba y abajo) */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil */
-    position: relative; /* Asegura que los elementos se posicionen correctamente */
-    margin: 0; /* Sin margen para asegurarse de que esté alineado con el borde */
-    width: 100%; /* Asegura que el nav ocupe todo el ancho de la página */
-    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho total */
-    margin-top: auto;
+/* Estilos generales para el Navbar */
+.navbar {
+    display: flex;
+    justify-content: center; /* Centrar todo el contenido del navbar */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
 }
 
-ul {
-    list-style: none; /* Eliminar viñetas */
-    padding: 0; /* Sin padding */
-    margin: 0; /* Sin margen */
-    flex-direction: row; /* Mantener en fila por defecto */
-    transition: max-height 0.3s ease; /* Transición suave para la altura */
-    overflow: hidden; /* Oculta el contenido cuando no está visible */
-    display: flex; /* Mostrar flexbox por defecto */
-    justify-content: center; /* Centrar los elementos en el contenedor */
-    gap: 10px; /* Espacio reducido entre elementos */
-    text-align: center; /* Centrar el texto en los elementos */
+/* Contenedor del Navbar centrado */
+.navbar-container {
+    display: flex;
+    justify-content: center; /* Centra los elementos dentro del navbar */
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho del navbar */
+    margin: 0 auto;
 }
 
-li {
-    color: white; /* Color de texto */
-    transition: color 0.3s; /* Transición suave para el color */
-    padding: 0.1rem; /* Espaciado interno reducido */
-}
-
-li:hover {
-    color: #ffa500; /* Cambiar a naranja al pasar el mouse */
-}
-
-.active {
-    font-weight: bold; /* Resaltar el enlace activo */
-    border-bottom: 2px solid #ffa500; /* Subrayado en el enlace activo */
-}
-
-/* Ocultar el menú por defecto en dispositivos móviles */
-@media (max-width: 768px) {
-    ul {
-        flex-direction: column; /* Cambia a columna en móvil */
-        position: absolute; /* Posiciona el menú de manera absoluta */
-        top: 100%; /* Coloca el menú debajo de la barra de navegación */
-        left: 0; /* Alinear a la izquierda */
-        background: #333; /* Color de fondo para el menú */
-        width: 100%; /* Ancho completo */
-        display: none; /* Ocultar menú por defecto */
-    }
-
-    ul.show {
-        display: flex; /* Muestra el menú cuando está abierto */
-    }
-
-    ul.hide {
-        display: none; /* Asegura que se oculte correctamente */
-    }
-}
-
-/* Estilos para el menú hamburguesa */
+/* Menú hamburguesa */
 .hamburger {
-    display: none; /* Ocultar por defecto */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-    color: white; /* Color del icono de hamburguesa */
-    font-size: 24px; /* Tamaño del icono */
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-/* Mostrar el icono de hamburguesa en dispositivos móviles */
+.hamburger .bar {
+    width: 100%;
+    height: 4px;
+    background-color: white;
+}
+
+/* Estilos del menú principal */
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center; /* Centrar los enlaces dentro del menú */
+}
+
+.nav-item {
+    margin: 0 15px;
+}
+
+.nav-item a {
+    color: white; /* Cambiado a blanco */
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 12px;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave */
+}
+
+.nav-item a:hover,
+.nav-item a.active {
+    color: white; /* Mantener color blanco al pasar el ratón */
+    background-color: #222; /* Sombreado al pasar el ratón */
+}
+
+/* Menú desplegable */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 180px;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+}
+
+.dropdown-menu li a {
+    color: white; /* Color blanco para los enlaces en el submenú */
+    text-decoration: none;
+    font-size: 16px;
+    padding: 0px; /* Añadir algo de relleno para que el sombreado sea más visible */
+}
+
+/* Cambiar el fondo al pasar el ratón sobre los enlaces dentro del submenú */
+.dropdown-menu li a:hover {
+    background-color: #444; /* Sombreado en el submenú al pasar el ratón */
+}
+
+/* Asegurarse de que el enlace activo dentro del submenú también tenga el sombreado correcto */
+.dropdown-menu li a.active {
+    background-color: #444; /* Sombreado para la página activa dentro del submenú */
+}
+
+/* Mostrar el submenú cuando se hace clic o pasa el ratón */
+.dropdown-menu {
+    display: none;
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: #333;
+        padding: 20px;
+        display: none;
+        z-index: 10;
+    }
+
+    .nav-links.open {
+        display: block;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+        text-align: center;
+    }
+
     .hamburger {
-        display: block; /* Mostrar el icono de hamburguesa en móvil */
+        display: flex;
+    }
+
+    .dropdown-menu {
+        position: static;
+        display: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .dropdown.open .dropdown-menu {
+        display: block;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 769px) {
+    .nav-links {
+        display: flex;
+    }
+
+    .hamburger {
+        display: none;
     }
 }

@@ -38,7 +38,7 @@ const Page: React.FC = () => {
     // Fetch tipos de OAC
     const fetchTiposOac = async () => {
         setLoading(true);
-        const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_Id}/values/${sheetNameTipos_Oac}!A2?key=${api_Key}`;
+        const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheet_Id}/values/${sheetNameTipos_Oac}!A3?key=${api_Key}`;
         try {
             const response = await fetch(apiUrl);
             const data = await response.json();

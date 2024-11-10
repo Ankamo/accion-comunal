@@ -8,7 +8,7 @@ interface Option {
     name: string;
 }
 
-const Page: React.FC = () => {
+const Confederacion: React.FC = () => {
     const [tiposOac, setTiposOac] = useState<Option[]>([]);
     const [selectedTipoOac, setSelectedTipoOac] = useState('');
     const [loading, setLoading] = useState(false);
@@ -140,4 +140,4 @@ const Page: React.FC = () => {
     );
 };
 
-export default Page;
+export default Confederacion;

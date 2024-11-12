@@ -15,12 +15,13 @@ const Confederacion: React.FC = () => {
     const [message, setMessage] = useState('');
     const [urlOac, setUrlOac] = useState('');
 
-    const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfvmYulfVx44LnNU7Ik_QdWNfEjuZRqIf16AAWsodAXExGFsw/formResponse";
-    const fields = {
-        tipoOac: "entry.846032752",
-        nombreOac: "entry.1030059550",
-        urlOac: "entry.1982445228",
-    };
+    // Elimina la URL del Google Form y los campos
+    // const googleFormUrl = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfvmYulfVx44LnNU7Ik_QdWNfEjuZRqIf16AAWsodAXExGFsw/formResponse";
+    // const fields = {
+    //     tipoOac: "entry.846032752",
+    //     nombreOac: "entry.1030059550",
+    //     urlOac: "entry.1982445228",
+    // };
 
     const fetchTiposOac = async () => {
         setLoading(true);
@@ -66,28 +67,19 @@ const Confederacion: React.FC = () => {
         const generatedUrl = `${baseUrl}${selectedTipoOac.replace(/\s+/g, '-').toLowerCase()}`;
         setUrlOac(generatedUrl);
 
-        const formData = new FormData();
-        formData.append(fields.tipoOac, selectedTipoOac);
-        formData.append(fields.nombreOac, selectedTipoOac); // Usar el nombre del tipo seleccionado
-        formData.append(fields.urlOac, generatedUrl);
+        // Elimina el envío del formulario a Google Forms
+        // const formData = new FormData();
+        // formData.append(fields.tipoOac, selectedTipoOac);
+        // formData.append(fields.nombreOac, selectedTipoOac); // Usar el nombre del tipo seleccionado
+        // formData.append(fields.urlOac, generatedUrl);
 
         try {
-            const response = await fetch(googleFormUrl, {
-                method: "POST",
-                body: formData,
-            });
-
-            if (response.ok) {
-                setMessage("Formulario enviado exitosamente."); // Mensaje de éxito
-                setSelectedTipoOac(''); // Reiniciar selección
-            } else {
-                const errorResponse = await response.text(); // Obtener texto de error para mayor claridad
-                console.error("Error de respuesta:", errorResponse);
-                setMessage("Error al enviar el formulario. Intenta nuevamente.");
-            }
+            // Aquí ya no enviamos datos al formulario de Google
+            setMessage("Formulario procesado correctamente.");
+            setSelectedTipoOac(''); // Reiniciar selección
         } catch (error) {
-            console.error("Error al enviar el formulario:", error);
-            setMessage("Formulario enviado exitosamente.");
+            console.error("Error al procesar el formulario:", error);
+            setMessage("Error al procesar el formulario. Intenta nuevamente.");
         } finally {
             setLoading(false);
         }

@@ -1,0 +1,55 @@
+/* Estilos generales para el header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Estilos para los logos */
+header .logo-left, 
+header .logo-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+header h1 {
+    color: #fff;
+}
+
+/* Aseguramos que las imágenes se adapten */
+header .logo-left img, 
+header .logo-right img {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+}
+
+/* Estilos para el bloque central */
+header div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+
+/* Título */
+header #header-titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Párrafos */
+header p {
+    margin: 0;
+    font-size: 14px;
+}

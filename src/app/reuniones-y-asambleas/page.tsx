@@ -17,23 +17,13 @@ interface AsambleaProps {
 
 const asambleasData: AsambleaProps[] = [
     {
-        convocatoria: " AGA-016",
-        tipo: "Asamblea General",
-        modalidad: "Extraordinaria",
-        categoria: "#asambleageneral",
-        fecha: "10 de noviembre del 2024",
-        hora: "4:30 PM",
-        lugar: "Calle 32 con Carrera 9 esquina.",
-        documentoUrl: "https://drive.google.com/file/d/1BQoc99IByrvxGYKXJ6dlg5iTjFa_Aa6L/view?usp=drive_link",
-    },
-    {
         convocatoria: "AGA-017",
         tipo: "Asamblea General",
         modalidad: "Ordinaria",
         categoria: "#asambleageneral",
         fecha: "24 de noviembre del 2024",
         hora: "4:30 PM",
-        linkIngreso: "https://meet.google.com/hst-hrnd-bc",
+        linkIngreso: "https://meet.google.com/hst-hrnd-bcc",
         documentoUrl: "https://drive.google.com/file/d/1BTrY0ixHb8Rd_QOpco1piFXSaPOR_vIH/view?usp=drive_link",
     },
     {

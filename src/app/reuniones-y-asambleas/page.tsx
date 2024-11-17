@@ -31,7 +31,7 @@ const asambleasData: AsambleaProps[] = [
         tipo: "Reunión de Mesa Directiva y Dignatarios",
         modalidad: "Ordinaria",
         categoria: "#reuniondeequipo",
-        fecha: "16 de noviembre del 2024",
+        fecha: "17 de noviembre del 2024",
         hora: "5:00 pm",
         linkIngreso: "https://meet.google.com/nsa-itpu-xob",
         documentoUrl: "Por Definir",

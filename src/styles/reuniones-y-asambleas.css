@@ -1,0 +1,126 @@
+/* src/styles/reuniones-y-asambleas.css */
+
+/* Contenedor general */
+.reuniones-container, .asambleas-container {
+    padding: 20px;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Encabezados principales */
+.reuniones-container h1, .asambleas-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #00d4ff;
+}
+
+/* Subtítulos y párrafos */
+.reuniones-container p, .asambleas-container p {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: #b0b0b0;
+}
+
+/* Lista de asambleas */
+.reuniones-list, .asambleas-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjetas individuales */
+.reunion-card, .asamblea-card {
+    background-color: #1f1f1f;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.reunion-card:hover, .asamblea-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Encabezados en tarjetas */
+.reunion-card h2, .reunion-card h3, .asamblea-card h2 {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Información en tarjetas */
+.reunion-card ul, .asamblea-card ul {
+    list-style: disc;
+    margin: 10px 0 0 20px;
+    color: #ccc;
+}
+
+.reunion-card li, .asamblea-card li {
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+/* Enlaces en tarjetas */
+.reunion-card a, .asamblea-card a {
+    color: #00d4ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+}
+
+.reunion-card a:hover, .asamblea-card a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Navegación de categorías */
+.asambleas-nav {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.asambleas-nav button {
+    background-color: #2a2a2a;
+    color: #00d4ff;
+    border: 1px solid #444;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.asambleas-nav button:hover {
+    background-color: #00d4ff;
+    color: #121212;
+    transform: scale(1.05);
+}
+
+.asambleas-nav button:active {
+    transform: scale(0.95);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .reuniones-list, .asambleas-list {
+        grid-template-columns: 1fr;
+    }
+
+    .reuniones-container h1, .asambleas-container h1 {
+        font-size: 2rem;
+    }
+
+    .reuniones-container p, .asambleas-container p {
+        font-size: 1rem;
+    }
+}

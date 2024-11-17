@@ -1,33 +1,34 @@
 import React from 'react';
 import '../styles/header.css';
+import { datosOac } from '../components/Datos/infoOac';
 
 const Header = () => {
     return (
         <header>
             <div className="logo-left">
-                <img 
-                    src="" 
-                    id="header-logoOac" 
-                    alt="Logo Izquierdo" 
-                    className="img-fluid" 
+                <img
+                    src="/oac.png"
+                    id="header-logoOac"
+                    alt="Logo Izquierdo"
+                    className="img-fluid"
                 />
             </div>
 
             <div>
-                <h1 id="header-titulo">Título Comunal</h1>
-                <p id="header-nit">NIT: 123456789</p>
-                <p id="header-ruc">RUC: 987654321</p>
-                <p id="header-pj">PJ: 0001</p>
-                <p id="header-expedido">Expedido: Bogotá</p>
-                <p id="header-ubicacion">Ubicación: Bogotá, Colombia</p>
+                <h1>{`${datosOac.TipoOac} ${datosOac.TipoUbicacion} ${datosOac.Nombre}`}</h1>
+                <p>NIT: {datosOac.Nit}</p>
+                <p>RUC: {datosOac.RUC}</p>
+                <p>PJ: {datosOac.PJ}</p>
+                <p>Expedido por: {datosOac.ExpedidoPor}</p>
+                <p>Ubicación: {datosOac.Ubicacion}</p>
             </div>
 
             <div className="logo-right">
-                <img 
-                    src="" 
-                    id="header-logoComunal" 
-                    alt="Logo Derecho" 
-                    className="img-fluid" 
+                <img
+                    src="/accioncomunal.png"
+                    id="header-logoComunal"
+                    alt="Logo Derecho"
+                    className="img-fluid"
                 />
             </div>
         </header>

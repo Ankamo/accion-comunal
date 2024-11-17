@@ -21,13 +21,14 @@ header .logo-right {
 
 header h1 {
     color: #fff;
+    font-size: 20px;
 }
 
 /* Aseguramos que las imágenes se adapten */
 header .logo-left img, 
 header .logo-right img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 80px;
+    max-height: 80px;
     width: auto;
     height: auto;
 }

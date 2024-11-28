@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import '../../styles/navbar.css';
+import '../styles/navbar.css';
 
 const Navbar: React.FC = () => {
     const pathname = usePathname();
@@ -21,8 +21,7 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <header>
-            <nav className="navbar">
+        <nav className="navbar">
                 {/* Menú hamburguesa en dispositivos móviles */}
                 <button className="hamburger" onClick={toggleMenu} aria-label="Toggle navigation menu">
                     <span className="bar"></span>
@@ -89,7 +88,6 @@ const Navbar: React.FC = () => {
                     </li>
                 </ul>
             </nav>
-        </header>
     );
 };
 

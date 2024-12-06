@@ -1,12 +1,13 @@
 // pages/index.tsx
 
-import React from 'react';
-import LeftSection from "@/components/principal/main/section/izquierdo/page"; // Se elimina la extensión .tsx y la palabra Import en mayúscula
-import RightSection from "@/components/principal/main/section/derecho/page"; // Se elimina la extensión .tsx y la palabra Import en mayúscula
-import HimnoComunal from "@/components/principal/simbolos/himno/page";
-import Logo from '@/components/principal/simbolos/logo/page';
-import Bandera from '@/components/principal/simbolos/bandera/page';
-import '../styles/main.css'; // Importa el archivo CSS personalizado
+import React from "react";
+import LeftSection from "@/components/section/izquierdo/page";
+import RightSection from "@/components/section/derecho/page";
+import HimnoComunal from "@/components/simbolos/himno/page";
+import Logo from "@/components/simbolos/logo/page";
+import Bandera from "@/components/simbolos/bandera/page";
+import Boton from "@/components/principal/main/Article/boton/page";
+import "../styles/main.css";
 
 const Page: React.FC = () => {
     return (
@@ -40,9 +41,8 @@ const Page: React.FC = () => {
                     <Bandera />
                 </div>
 
-                <button className="cta-button">
-                    Ingresar Ahora
-                </button>
+                {/* Botón centrado */}
+                <Boton />
             </article>
 
             {/* Sección derecha */}

@@ -6,13 +6,12 @@
     box-sizing: border-box; /* Asegurarse de que el tamaño del elemento incluye padding y borde */
     margin: 0; /* Eliminar márgenes por defecto */
     padding: 0; /* Eliminar padding por defecto */
-    background-color: red;
 }
 
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #0f0f0f;
+    background-color: red;
     color: #eaeaea;
     display: flex;
     flex-direction: column;

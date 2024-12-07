@@ -6,6 +6,7 @@
     box-sizing: border-box; /* Asegurarse de que el tamaño del elemento incluye padding y borde */
     margin: 0; /* Eliminar márgenes por defecto */
     padding: 0; /* Eliminar padding por defecto */
+    background-color: red;
 }
 
 body {

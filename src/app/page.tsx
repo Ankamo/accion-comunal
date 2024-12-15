@@ -9,7 +9,7 @@ const Page: React.FC = () => {
 
             {/* Artículo central */}
             <article className="main-article">
-                <h1 className="article-title">Bienvenido a la WebApp de Acción Comunal</h1>
+                <h1 className="article-title">Bienvenido a la WebApp de Acción Comunales</h1>
                 <p className="article-paragraph">
                     Estamos encantados de tenerte aquí. Este sitio está diseñado para ofrecerte
                     toda la información y recursos que necesitas de manera clara y accesible.

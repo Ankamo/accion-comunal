@@ -1,4 +1,4 @@
-import "./globals.css"; // Archivo de estilos globales
+import "../styles/globals.css"; // Archivo de estilos globales
 import { ReactNode } from "react";
 
 export const metadata = {
